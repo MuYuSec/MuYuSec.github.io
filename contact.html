@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>木鱼安全实验室 - 联系我们</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 添加网站图标 -->
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <!-- 添加Open Graph标签，用于社交媒体分享 -->
+    <meta property="og:title" content="木鱼安全实验室 - 联系我们">
+    <meta property="og:description" content="联系木鱼安全实验室，与我们交流合作">
+    <meta property="og:image" content="img/logo.jpg">
+    <meta property="og:url" content="https://muyusec.github.io/contact.html">
+    <style>
+        body {
+            overflow-x: hidden;
+            position: relative;
+            background-color: var(--bg-color);
+        }
+        
+        /* 全屏展示区域 */
+        .fullscreen-intro {
+            height: 100vh;
+            width: 100%;
+            background-color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .fullscreen-intro::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6));
+            z-index: 1;
+        }
+        
+        .fullscreen-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .fullscreen-title {
+            font-size: 6rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.5s;
+            white-space: nowrap;
+        }
+        
+        .fullscreen-title span {
+            color: var(--primary-color);
+        }
+        
+        .fullscreen-subtitle {
+            font-size: 1.8rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.8s;
+            margin-bottom: 40px;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--light-color);
+            font-size: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+        }
+        
+        .scroll-down i {
+            font-size: 2rem;
+            margin-top: 10px;
+        }
+        
+        /* 网格线背景 */
+        .grid-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(43, 43, 43, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(43, 43, 43, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+        }
+        
+        /* 下滑动画 */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+        
+        /* 联系我们内容 */
+        .contact-section {
+            padding: 80px 0;
+            background-color: var(--bg-color);
+        }
+        
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+        }
+        
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .section-title p {
+            font-size: 1.2rem;
+            color: var(--light-gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .contact-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+        
+        .contact-info {
+            background-color: var(--dark-color);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .contact-info.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(66, 185, 131, 0.2);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(66, 185, 131, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .contact-icon i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .contact-text {
+            flex-grow: 1;
+        }
+        
+        .contact-text h4 {
+            font-size: 1.2rem;
+            color: var(--light-color);
+            margin-bottom: 5px;
+        }
+        
+        .contact-text p, .contact-text a {
+            font-size: 1rem;
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-text a:hover {
+            color: var(--primary-color);
+        }
+        
+        .contact-form {
+            background-color: var(--dark-color);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+        }
+        
+        .contact-form.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .contact-form h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(66, 185, 131, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 1rem;
+            color: var(--light-color);
+            margin-bottom: 10px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: var(--light-color);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary-color);
+            color: var(--dark-color);
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background-color: #36a16f;
+            transform: translateY(-3px);
+        }
+        
+        .social-links {
+            margin-top: 30px;
+        }
+        
+        .social-links h4 {
+            font-size: 1.2rem;
+            color: var(--light-color);
+            margin-bottom: 15px;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--primary-color);
+            color: var(--dark-color);
+            transform: translateY(-3px);
+        }
+        
+        .location-map {
+            margin-top: 60px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+        }
+        
+        .location-map.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .location-map iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+        }
+        
+        .line-decoration {
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: var(--primary-color);
+            opacity: 0.2;
+        }
+        
+        .line-1 {
+            top: 10%;
+            left: 5%;
+            transform: rotate(45deg);
+        }
+        
+        .line-2 {
+            top: 30%;
+            right: 10%;
+            transform: rotate(-30deg);
+        }
+        
+        .line-3 {
+            bottom: 20%;
+            left: 15%;
+            transform: rotate(-60deg);
+        }
+        
+        .line-4 {
+            bottom: 10%;
+            right: 5%;
+            transform: rotate(20deg);
+        }
+        
+        @media (max-width: 768px) {
+            .fullscreen-title {
+                font-size: 3rem;
+            }
+            
+            .fullscreen-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏容器 -->
+    <div id="navbar-container"></div>
+
+    <!-- 全屏展示区域 -->
+    <section class="fullscreen-intro">
+        <div class="grid-background"></div>
+        <div class="fullscreen-content">
+            <h1 class="fullscreen-title">联系<span>我们</span></h1>
+            <p class="fullscreen-subtitle">与木鱼安全实验室交流合作</p>
+        </div>
+        <div class="scroll-down" id="scroll-down">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- 联系我们内容 -->
+    <section class="contact-section" id="contact-content">
+        <div class="contact-container">
+            <div class="section-title">
+                <h2>联系方式</h2>
+                <p>欢迎通过以下方式与我们取得联系，探讨合作或咨询相关问题</p>
+            </div>
+            
+            <div class="line-decoration line-1"></div>
+            <div class="line-decoration line-2"></div>
+
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>联系信息</h3>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>电子邮箱</h4>
+                            <a href="mailto:muy0sec@gmail.com">muy0sec@gmail.com</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>地址</h4>
+                            <p>湖南省湘潭市福星东路88号湖南工程学院</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>工作时间</h4>
+                            <p>周一至周五: 9:00 AM - 5:00 PM</p>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <h4>关注我们</h4>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="social-icon">
+                                <i class="fab fa-weixin"></i>
+                            </a>
+                            <a href="#" class="social-icon">
+                                <i class="fab fa-qq"></i>
+                            </a>
+                            <a href="#" class="social-icon">
+                                <i class="fab fa-weibo"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>发送消息</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name" class="form-label">姓名</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">电子邮箱</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject" class="form-label">主题</label>
+                            <input type="text" id="subject" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message" class="form-label">消息内容</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">发送消息</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="line-decoration line-3"></div>
+            <div class="line-decoration line-4"></div>
+            
+            <div class="location-map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3417.5562169993814!2d112.9196491!3d27.882663!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjfCsDUyJzU3LjYiTiAxMTLCsDU1JzEwLjciRQ!5e0!3m2!1sen!2sus!4v1651234567890!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 滚动动画
+            window.addEventListener('scroll', function() {
+                // 页面元素动画
+                const elements = document.querySelectorAll('.section-title, .contact-info, .contact-form, .location-map');
+                
+                elements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementTop < windowHeight - 100) {
+                        setTimeout(() => {
+                            element.classList.add('visible');
+                        }, parseInt(element.dataset.delay) || 0);
+                    }
+                });
+            });
+            
+            // 点击向下滚动按钮
+            document.getElementById('scroll-down').addEventListener('click', function() {
+                const contactContent = document.getElementById('contact-content');
+                contactContent.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // 线条动画效果
+            const lines = document.querySelectorAll('.line-decoration');
+            
+            function animateLines() {
+                lines.forEach((line, index) => {
+                    const delay = index * 200;
+                    setTimeout(() => {
+                        line.style.opacity = '0.5';
+                        setTimeout(() => {
+                            line.style.opacity = '0.2';
+                            setTimeout(() => {
+                                line.style.opacity = '0.5';
+                            }, 1000);
+                        }, 1000);
+                    }, delay);
+                });
+                
+                setTimeout(animateLines, 3000);
+            }
+            
+            animateLines();
+            
+            // 联系表单提交
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 在实际应用中，这里应该发送表单数据到服务器
+                alert('感谢您的留言，我们会尽快回复！');
+                this.reset();
+            });
+            
+            // 模拟滚动事件以触发初始动画
+            window.dispatchEvent(new Event('scroll'));
+        });
+    </script>
+</body>
+</html>

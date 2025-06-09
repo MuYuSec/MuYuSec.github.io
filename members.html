@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>木鱼安全实验室 - 历届成员</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 添加网站图标 -->
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <!-- 添加Open Graph标签，用于社交媒体分享 -->
+    <meta property="og:title" content="木鱼安全实验室 - 历届成员">
+    <meta property="og:description" content="木鱼安全实验室历届成员展示">
+    <meta property="og:image" content="img/logo.jpg">
+    <meta property="og:url" content="https://muyusec.github.io/members.html">
+    <style>
+        body {
+            overflow-x: hidden;
+            position: relative;
+            background-color: #0f0f0f;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.4s ease;
+            background-color: transparent;
+        }
+        
+        header.scrolled {
+            background-color: rgba(17, 17, 17, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--light-color);
+        }
+        
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .logo span {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 5px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover:after, .nav-links a.active:after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--light-color);
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                flex-direction: column;
+                background-color: var(--dark-color);
+                padding: 20px 0;
+                text-align: center;
+                transition: all 0.5s ease;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+        }
+        
+        /* 全屏展示区域 */
+        .fullscreen-intro {
+            height: 100vh;
+            width: 100%;
+            background-color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .fullscreen-intro::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6));
+            z-index: 1;
+        }
+        
+        .fullscreen-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .fullscreen-title {
+            font-size: 6rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.5s;
+            white-space: nowrap;
+        }
+        
+        .fullscreen-title span {
+            color: var(--primary-color);
+        }
+        
+        .fullscreen-subtitle {
+            font-size: 1.8rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.8s;
+            margin-bottom: 40px;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--light-color);
+            font-size: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+        }
+        
+        .scroll-down i {
+            font-size: 2rem;
+            margin-top: 10px;
+        }
+        
+        /* 网格线背景 */
+        .grid-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(43, 43, 43, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(43, 43, 43, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+        }
+        
+        /* 下滑动画 */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+        
+        /* 成员展示部分 */
+        .members-section {
+            padding: 80px 0;
+            background-color: var(--bg-color);
+            position: relative;
+        }
+        
+        .members-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .section-title p {
+            font-size: 1.2rem;
+            color: var(--light-gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* 团队成员卡片网格 */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .team-member {
+            background-color: var(--dark-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .team-member.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .member-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 3px solid var(--primary-color);
+        }
+        
+        .member-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        
+        .team-member:hover .member-avatar img {
+            transform: scale(1.1);
+        }
+        
+        .member-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--light-color);
+        }
+        
+        .member-role {
+            font-size: 1rem;
+            color: var(--light-gray);
+            margin-bottom: 15px;
+        }
+        
+        .member-description {
+            font-size: 0.95rem;
+            color: var(--light-gray);
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+        
+        /* 团队分组标题 */
+        .team-category {
+            margin-top: 80px;
+            margin-bottom: 40px;
+            position: relative;
+            text-align: left;
+        }
+        
+        .team-category h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--light-color);
+            display: inline-block;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--primary-color);
+        }
+        
+        /* 团队导航选项卡 */
+        .team-tabs {
+            display: flex;
+            justify-content: center;
+            margin: 60px 0 40px;
+            flex-wrap: wrap;
+        }
+        
+        .team-tab {
+            padding: 12px 25px;
+            margin: 0 10px 10px;
+            background-color: rgba(66, 185, 131, 0.1);
+            border: 2px solid var(--primary-color);
+            border-radius: 30px;
+            color: var(--light-color);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .team-tab:hover {
+            background-color: rgba(66, 185, 131, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .team-tab.active {
+            background-color: var(--primary-color);
+            color: var(--dark-color);
+        }
+        
+        /* 成员展示区域 */
+        .members-display {
+            position: relative;
+            min-height: 400px;
+        }
+        
+        .team-group {
+            display: none;
+        }
+        
+        .team-group.active {
+            display: block;
+        }
+        
+        .team-group-title {
+            position: relative;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            text-align: center;
+        }
+        
+        .team-group-title h3 {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+        }
+        
+        .team-group-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        /* 成员轮播 */
+        .members-carousel {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            padding: 20px 0;
+        }
+        
+        .members-slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .member-slide {
+            min-width: 100%;
+            padding: 0 15px;
+        }
+        
+        /* 导航与滑动箭头 */
+        .team-navigation {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            z-index: 10;
+        }
+        
+        .nav-arrow {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: var(--dark-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .nav-arrow:hover {
+            background-color: var(--light-color);
+        }
+        
+        .nav-prev {
+            left: 20px;
+        }
+        
+        .nav-next {
+            right: 20px;
+        }
+        
+        /* 轮播指示器 */
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(66, 185, 131, 0.3);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .indicator.active {
+            background-color: var(--primary-color);
+            transform: scale(1.2);
+        }
+        
+        /* 团队座右铭部分 */
+        .motto-section {
+            padding: 60px 0;
+            background-color: var(--dark-color);
+            position: relative;
+        }
+        
+        .motto-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .motto-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .motto-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .motto-text {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            color: var(--light-gray);
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .fullscreen-title {
+                font-size: 3rem;
+            }
+            
+            .fullscreen-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .team-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .nav-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            
+            .nav-prev {
+                left: 10px;
+            }
+            
+            .nav-next {
+                right: 10px;
+            }
+            
+            .motto-title {
+                font-size: 2rem;
+            }
+            
+            .motto-text {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏容器 -->
+    <div id="navbar-container"></div>
+
+    <!-- 全屏展示区域 -->
+    <section class="fullscreen-intro">
+        <div class="grid-background"></div>
+        <div class="fullscreen-content">
+            <h1 class="fullscreen-title"><span>历届成员</span></h1>
+            <p class="fullscreen-subtitle">团队感谢每一位成员的贡献</p>
+        </div>
+        <div class="scroll-down" id="scroll-down">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- 成员展示部分 -->
+    <section class="members-section" id="members-content">
+        <div class="members-container">
+            <div class="section-title">
+                <h2>历届成员</h2>
+                <p>木鱼安全实验室感谢各位成员的付出，团队与大家同在</p>
+            </div>
+            
+            <!-- 团队分类选项卡 -->
+            <div class="team-tabs">
+                <div class="team-tab active" data-target="ctf-team">CTF小组</div>
+                <div class="team-tab" data-target="pentest-team">攻防渗透小组</div>
+                <div class="team-tab" data-target="devops-team">开发运维小组</div>
+                <div class="team-tab" data-target="operations-team">运营宣传小组</div>
+            </div>
+            
+            <!-- 成员展示区域 - 此处内容将由JavaScript动态生成 -->
+            <div class="members-display">
+                <!-- 动态生成的内容将插入到这里 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 座右铭部分 -->
+    <section class="motto-section">
+        <div class="motto-content">
+            <h2 class="motto-title">Motto</h2>
+            <p class="motto-text">长风破浪会有时，直挂云帆济沧海</p>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/data/members-data.js"></script>
+    <script src="js/members.js"></script>
+</body>
+</html>

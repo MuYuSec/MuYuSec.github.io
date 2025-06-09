@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>木鱼安全实验室 - 团队奖项</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 添加网站图标 -->
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <!-- 添加Open Graph标签，用于社交媒体分享 -->
+    <meta property="og:title" content="木鱼安全实验室 - 团队奖项">
+    <meta property="og:description" content="木鱼安全实验室获得的漏洞报告证书和CTF竞赛奖项">
+    <meta property="og:image" content="img/logo.jpg">
+    <meta property="og:url" content="https://muyusec.github.io/awards.html">
+    <style>
+         body {
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.4s ease;
+            background-color: transparent;
+        }
+        
+        header.scrolled {
+            background-color: rgba(17, 17, 17, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--light-color);
+        }
+        
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .logo span {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        /* 全屏展示区域 */
+        .fullscreen-intro {
+            height: 100vh;
+            width: 100%;
+            background-color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .fullscreen-intro::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6));
+            z-index: 1;
+        }
+        
+        .fullscreen-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .fullscreen-title {
+            font-size: 6rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.5s;
+            white-space: nowrap;
+        }
+        
+        .fullscreen-title span {
+            color: var(--primary-color);
+        }
+        
+        .fullscreen-subtitle {
+            font-size: 1.8rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.8s;
+            margin-bottom: 40px;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--light-color);
+            font-size: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+        }
+        
+        .scroll-down i {
+            font-size: 2rem;
+            margin-top: 10px;
+        }
+        
+        /* 网格线背景 */
+        .grid-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(43, 43, 43, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(43, 43, 43, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+        }
+        
+        /* 下滑动画 */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+        
+        /* 奖项内容样式 */
+        .awards-section {
+            padding: 80px 0;
+            background-color: var(--dark-color);
+        }
+        
+        .awards-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+        }
+        
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .section-title p {
+            font-size: 1.2rem;
+            color: var(--light-gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* 漏洞报告部分 */
+        .vuln-section {
+            background-color: var(--dark-color);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .vuln-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            padding: 20px;
+            margin: 0;
+            border-bottom: 2px solid rgba(66, 185, 131, 0.2);
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .vuln-title:before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+        }
+        
+        .vuln-list {
+            list-style: none;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .vuln-item {
+            padding: 15px 20px;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .vuln-item:last-child {
+            border-bottom: none;
+        }
+        
+        .vuln-date {
+            color: var(--primary-color);
+            display: inline-block;
+            margin-right: 10px;
+            font-weight: 500;
+        }
+        
+        .vuln-description {
+            display: inline-block;
+            color: var(--light-color);
+        }
+        
+        .vuln-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .vuln-item a:hover {
+            text-decoration: underline;
+        }
+        
+        /* CTF竞赛成果部分 */
+        .ctf-section {
+            background-color: var(--dark-color);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .ctf-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            padding: 20px;
+            margin: 0;
+            border-bottom: 2px solid rgba(66, 185, 131, 0.2);
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .ctf-title:before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+        }
+        
+        .ctf-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding: 30px;
+        }
+        
+        .ctf-card {
+            border-left: 3px solid var(--primary-color);
+            background-color: rgba(17, 17, 17, 0.5);
+            padding: 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .ctf-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .ctf-card-date {
+            font-size: 0.9rem;
+            color: var(--light-gray);
+            margin-bottom: 10px;
+        }
+        
+        .ctf-card-name {
+            font-size: 1.2rem;
+            color: var(--light-color);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .ctf-card-rank {
+            font-size: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .line-decoration {
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: var(--primary-color);
+            opacity: 0.2;
+        }
+        
+        .line-1 {
+            top: 10%;
+            left: 5%;
+            transform: rotate(45deg);
+        }
+        
+        .line-2 {
+            top: 30%;
+            right: 10%;
+            transform: rotate(-30deg);
+        }
+        
+        .line-3 {
+            bottom: 20%;
+            left: 15%;
+            transform: rotate(-60deg);
+        }
+        
+        .line-4 {
+            bottom: 10%;
+            right: 5%;
+            transform: rotate(20deg);
+        }
+        
+        @media (max-width: 992px) {
+            .ctf-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .fullscreen-title {
+                font-size: 3rem;
+            }
+            
+            .fullscreen-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .ctf-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .vuln-title, .ctf-title {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .vuln-item {
+                padding: 15px 10px;
+            }
+            
+            .vuln-date {
+                display: block;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏容器 -->
+    <div id="navbar-container"></div>
+
+    <!-- 全屏展示区域 -->
+    <section class="fullscreen-intro">
+        <div class="grid-background"></div>
+        <div class="fullscreen-content">
+            <h1 class="fullscreen-title">团队<span>奖项</span></h1>
+            <p class="fullscreen-subtitle">记录我们的安全实践与竞赛成果</p>
+        </div>
+        <div class="scroll-down" id="scroll-down">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- 奖项内容 -->
+    <section class="awards-section" id="awards-content">
+        <div class="awards-container">
+            <div class="line-decoration line-1"></div>
+            <div class="line-decoration line-2"></div>
+            
+            <!-- 漏洞报告部分 -->
+            <div class="vuln-section">
+                <h3 class="vuln-title">漏洞报告</h3>
+                <ul class="vuln-list" id="vuln-list">
+                    <!-- 漏洞报告内容将通过JavaScript动态加载 -->
+                </ul>
+            </div>
+            
+            <!-- CTF竞赛成果部分 -->
+            <div class="ctf-section">
+                <h3 class="ctf-title">CTF & 竞赛成果</h3>
+                <div class="ctf-grid" id="ctf-grid">
+                    <!-- CTF竞赛成果将通过JavaScript动态加载 -->
+                </div>
+            </div>
+            
+            <div class="line-decoration line-3"></div>
+            <div class="line-decoration line-4"></div>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 加载奖项数据
+            fetch('data/awards.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('网络响应不正确');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    renderVulnReports(data.vulnerabilityReports);
+                    renderCtfCompetitions(data.ctfCompetitions);
+                })
+                .catch(error => {
+                    console.error('获取奖项数据时出错:', error);
+                });
+            
+            // 渲染漏洞报告数据
+            function renderVulnReports(reports) {
+                const vulnList = document.getElementById('vuln-list');
+                vulnList.innerHTML = ''; // 清空列表
+                
+                reports.forEach(report => {
+                    const li = document.createElement('li');
+                    li.className = 'vuln-item';
+                    
+                    const dateSpan = document.createElement('span');
+                    dateSpan.className = 'vuln-date';
+                    dateSpan.textContent = report.date;
+                    
+                    const descSpan = document.createElement('span');
+                    descSpan.className = 'vuln-description';
+                    
+                    if (report.link) {
+                        const link = document.createElement('a');
+                        link.href = report.link;
+                        link.textContent = report.description;
+                        descSpan.appendChild(link);
+                    } else {
+                        descSpan.textContent = report.description;
+                    }
+                    
+                    li.appendChild(dateSpan);
+                    li.appendChild(descSpan);
+                    vulnList.appendChild(li);
+                });
+            }
+            
+            // 渲染CTF竞赛成果数据
+            function renderCtfCompetitions(competitions) {
+                const ctfGrid = document.getElementById('ctf-grid');
+                ctfGrid.innerHTML = ''; // 清空网格
+                
+                competitions.forEach(comp => {
+                    const card = document.createElement('div');
+                    card.className = 'ctf-card';
+                    
+                    const dateDiv = document.createElement('div');
+                    dateDiv.className = 'ctf-card-date';
+                    dateDiv.textContent = comp.date;
+                    
+                    const nameDiv = document.createElement('div');
+                    nameDiv.className = 'ctf-card-name';
+                    nameDiv.textContent = comp.name;
+                    
+                    const rankDiv = document.createElement('div');
+                    rankDiv.className = 'ctf-card-rank';
+                    rankDiv.textContent = comp.rank;
+                    
+                    card.appendChild(dateDiv);
+                    card.appendChild(nameDiv);
+                    card.appendChild(rankDiv);
+                    
+                    ctfGrid.appendChild(card);
+                });
+            }
+            
+            // 滚动动画
+            window.addEventListener('scroll', function() {
+                // 页面元素动画
+                const elements = document.querySelectorAll('.vuln-section, .ctf-section');
+                
+                elements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementTop < windowHeight - 100) {
+                        setTimeout(() => {
+                            element.style.opacity = 1;
+                            element.style.transform = 'translateY(0)';
+                        }, parseInt(element.dataset.delay) || 0);
+                    }
+                });
+            });
+            
+            // 设置初始透明度和变换
+            const elements = document.querySelectorAll('.vuln-section, .ctf-section');
+            elements.forEach(element => {
+                element.style.opacity = 0;
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'all 0.5s ease';
+            });
+            
+            // 点击向下滚动按钮
+            document.getElementById('scroll-down').addEventListener('click', function() {
+                const awardsContent = document.getElementById('awards-content');
+                awardsContent.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // 线条动画效果
+            const lines = document.querySelectorAll('.line-decoration');
+            
+            function animateLines() {
+                lines.forEach((line, index) => {
+                    const delay = index * 200;
+                    setTimeout(() => {
+                        line.style.opacity = '0.5';
+                        setTimeout(() => {
+                            line.style.opacity = '0.2';
+                            setTimeout(() => {
+                                line.style.opacity = '0.5';
+                            }, 1000);
+                        }, 1000);
+                    }, delay);
+                });
+                
+                setTimeout(animateLines, 3000);
+            }
+            
+            animateLines();
+            
+            // 模拟滚动事件以触发初始动画
+            window.dispatchEvent(new Event('scroll'));
+        });
+    </script>
+</body>
+</html>

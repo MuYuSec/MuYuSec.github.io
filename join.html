@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>木鱼安全实验室 - 加入团队</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 添加网站图标 -->
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <!-- 添加Open Graph标签，用于社交媒体分享 -->
+    <meta property="og:title" content="木鱼安全实验室 - 加入团队">
+    <meta property="og:description" content="加入木鱼安全实验室，开启您的网络安全之旅">
+    <meta property="og:image" content="img/logo.jpg">
+    <meta property="og:url" content="https://muyusec.github.io/join.html">
+    <style>
+        body {
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.4s ease;
+            background-color: transparent;
+        }
+        
+        header.scrolled {
+            background-color: rgba(17, 17, 17, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--light-color);
+        }
+        
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .logo span {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 5px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover:after, .nav-links a.active:after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--light-color);
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                flex-direction: column;
+                background-color: var(--dark-color);
+                padding: 20px 0;
+                text-align: center;
+                transition: all 0.5s ease;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+        }
+        
+        /* 全屏展示区域 */
+        .fullscreen-intro {
+            height: 100vh;
+            width: 100%;
+            background-color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .fullscreen-intro::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6));
+            z-index: 1;
+        }
+        
+        .fullscreen-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .fullscreen-title {
+            font-size: 6rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.5s;
+            white-space: nowrap;
+        }
+        
+        .fullscreen-title span {
+            color: var(--primary-color);
+        }
+        
+        .fullscreen-subtitle {
+            font-size: 1.8rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.8s;
+            margin-bottom: 40px;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--light-color);
+            font-size: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+        }
+        
+        .scroll-down i {
+            font-size: 2rem;
+            margin-top: 10px;
+        }
+        
+        /* 网格线背景 */
+        .grid-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(43, 43, 43, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(43, 43, 43, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+        }
+        
+        /* 下滑动画 */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+        
+        /* 加入团队内容部分 */
+        .join-section {
+            padding: 80px 0;
+            background-color: var(--bg-color);
+        }
+        
+        .join-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .join-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: var(--light-color);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .join-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .join-content h3 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin: 40px 0 20px;
+        }
+        
+        .join-content p {
+            margin-bottom: 20px;
+        }
+        
+        .join-content a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        
+        .join-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .join-steps {
+            margin: 40px 0;
+            padding: 30px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .join-steps ol {
+            padding-left: 20px;
+        }
+        
+        .join-steps li {
+            margin-bottom: 15px;
+        }
+        
+        .recruitment-card {
+            margin: 40px 0;
+            padding: 30px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-color);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .recruitment-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .final-note {
+            font-size: 1.2rem;
+            text-align: center;
+            margin-top: 60px;
+            font-style: italic;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .final-note.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .line-decoration {
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: var(--primary-color);
+            opacity: 0.5;
+        }
+        
+        .line-1 {
+            top: 10%;
+            left: 5%;
+            transform: rotate(45deg);
+        }
+        
+        .line-2 {
+            top: 30%;
+            right: 10%;
+            transform: rotate(-30deg);
+        }
+        
+        .line-3 {
+            bottom: 20%;
+            left: 15%;
+            transform: rotate(-60deg);
+        }
+        
+        .line-4 {
+            bottom: 10%;
+            right: 5%;
+            transform: rotate(20deg);
+        }
+        
+        @media (max-width: 768px) {
+            .fullscreen-title {
+                font-size: 3rem;
+            }
+            
+            .fullscreen-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .join-content h3 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏容器 -->
+    <div id="navbar-container"></div>
+
+    <!-- 全屏展示区域 -->
+    <section class="fullscreen-intro">
+        <div class="grid-background"></div>
+        <div class="fullscreen-content">
+            <h1 class="fullscreen-title">加入<span>团队</span></h1>
+            <p class="fullscreen-subtitle">成为木鱼安全实验室的一员，与我们一起探索赛博世界。</p>
+        </div>
+        <div class="scroll-down" id="scroll-down">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- 加入团队内容 -->
+    <section class="join-section" id="join-content">
+        <div class="join-container">
+            <div class="section-title">
+                <h2>如何加入我们</h2>
+            </div>
+            
+            <div class="line-decoration line-1"></div>
+            <div class="line-decoration line-2"></div>
+            
+            <div class="join-content">
+                <p>木鱼安全实验室欢迎对网络安全有热情的同学加入我们的团队！我们提供专业的技术指导、丰富的学习资源和实战机会，帮助你在网络安全领域不断成长。</p>
+                
+                <div class="recruitment-card">
+                    <h3>长期招新</h3>
+                    <p>每年五月，我们都会进行集中招新，具体时间视学校安排而定。新生可以参加HXCTF，提前掌握一些基础的网络安全知识。HXCTF是由湖南工程学院、湖南科技大学、湘潭大学联合举办的新生夺旗赛，比赛题目涵盖多个方向，难度适中且递进合理，非常适合零基础的同学入门学习网络安全技能。</p>
+                    
+                    <p>在非集中招新时间，湖南工程学院在读1~3年级学生均可通过发送邮件至<a href="mailto:muy0sec@gmail.com">muy0sec@gmail.com</a>申请加入团队。</p>
+                    
+                    <p>邮件内容需包含姓名、性别、学院、学号、常用邮箱、联系电话以及意向加入的小组方向。</p>
+            
+                    <p>木鱼安全实验室期待与你相遇。</p>
+                </div>
+                
+                <h3>招新流程</h3>
+                <div class="join-steps">
+                    <ol>
+                        <li>通过填写招新表格或发送邮件表达加入意向</li>
+                        <li>参加团队面试，展示基础知识和学习能力</li>
+                        <li>通过初步筛选后进入试用期，接受基础培训</li>
+                        <li>完成试用期任务和考核后，正式成为团队成员</li>
+                    </ol>
+                </div>
+                
+                <h3>我们在寻找</h3>
+                <p>木鱼安全实验室欢迎以下方向的同学加入：</p>
+                <ul>
+                    <li><span class="highlight">CTF爱好者</span> - 对信息安全竞赛充满热情，愿意深入研究Web安全、密码学、逆向工程、二进制漏洞利用等技术领域</li>
+                    <li><span class="highlight">攻防渗透爱好者</span> - 对网络渗透测试、漏洞挖掘与利用、红蓝对抗演练有浓厚兴趣</li>
+                    <li><span class="highlight">开发运维爱好者</span> - 具备编程基础，热衷于安全工具开发、靶场环境搭建、平台系统维护等工作</li>
+                    <li><span class="highlight">运营宣传爱好者</span> - 擅长技术内容创作、活动组织策划、知识分享，具有良好的沟通与协作能力</li>
+                </ul>
+                
+                <h3>我们的承诺</h3>
+                <p>成为木鱼安全实验室的一员，你将获得：</p>
+                <ul>
+                    <li>完善的网络安全培训体系和丰富的学习资源</li>
+                    <li>参与实战项目、安全竞赛和攻防演练的宝贵机会</li>
+                    <li>与业内专家和优秀同行交流学习的平台</li>
+                    <li>开放包容的团队氛围和深度技术探讨的环境</li>
+                </ul>
+            </div>
+            
+            <div class="line-decoration line-3"></div>
+            <div class="line-decoration line-4"></div>
+            
+            <div class="final-note">
+                木鱼安全实验室期待遇到不平凡的你！
+            </div>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 滚动动画
+            window.addEventListener('scroll', function() {
+                // 滚动动画
+                const elements = document.querySelectorAll('.section-title, .join-content, .recruitment-card, .final-note');
+                
+                elements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementTop < windowHeight - 100) {
+                        element.classList.add('visible');
+                    }
+                });
+            });
+            
+            // 点击向下滚动按钮
+            document.getElementById('scroll-down').addEventListener('click', function() {
+                const joinContent = document.getElementById('join-content');
+                joinContent.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // 线条动画效果
+            const lines = document.querySelectorAll('.line-decoration');
+            
+            function animateLines() {
+                lines.forEach((line, index) => {
+                    const delay = index * 200;
+                    setTimeout(() => {
+                        line.style.opacity = '0.5';
+                        setTimeout(() => {
+                            line.style.opacity = '0.2';
+                            setTimeout(() => {
+                                line.style.opacity = '0.5';
+                            }, 1000);
+                        }, 1000);
+                    }, delay);
+                });
+                
+                setTimeout(animateLines, 3000);
+            }
+            
+            animateLines();
+            
+            // 模拟滚动事件以触发初始动画
+            window.dispatchEvent(new Event('scroll'));
+        });
+    </script>
+</body>
+</html> 

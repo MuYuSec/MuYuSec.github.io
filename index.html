@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>木鱼安全实验室 - 首页</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 添加网站图标 -->
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <!-- 添加Open Graph标签，用于社交媒体分享 -->
+    <meta property="og:title" content="木鱼安全实验室">
+    <meta property="og:description" content="木鱼安全实验室致力于网络安全研究与教育">
+    <meta property="og:image" content="img/logo.jpg">
+    <meta property="og:url" content="https://muyusec.github.io">
+    <style>
+        /* 新导航栏样式 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.4s ease;
+            background-color: transparent;
+        }
+        
+        header.scrolled {
+            background-color: rgba(17, 17, 17, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--light-color);
+        }
+        
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .logo span {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 5px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover:after, .nav-links a.active:after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--light-color);
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                flex-direction: column;
+                background-color: var(--dark-color);
+                padding: 20px 0;
+                text-align: center;
+                transition: all 0.5s ease;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+        }
+        
+        .hero {
+            height: 100vh;
+            background-color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 5rem;
+            margin-bottom: 30px;
+            white-space: nowrap;
+        }
+        
+        .hero h1 .highlight {
+            color: var(--primary-color);
+            display: inline-block;
+        }
+        
+        .hero .typing {
+            font-size: 2rem;
+            height: 3rem;
+            margin-bottom: 40px;
+            display: inline-block;
+        }
+        
+        .hero .description {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+        
+        .hero .circle {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            opacity: 0.7;
+            top: 30%;
+            left: 50%;
+        }
+        
+        .copyright {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--light-gray);
+            z-index: 2;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero .typing {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏容器 -->
+    <div id="navbar-container"></div>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="circle"></div>
+        <div class="hero-content">
+            <h1>MuYu <span class="highlight">Security</span> Lab</h1>
+            <div id="typing-text" class="typing"></div>
+            <p class="description">
+                <span style="color: #fff;">The team is dedicated to researching cybersecurity technologies, focusing on CTF competitions, penetration testing, vulnerability discovery, red-blue confrontation, and secure development.</span>
+            </p>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2022-2025 木鱼安全实验室.</p>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        // 打字机效果
+        const typingElement = document.getElementById('typing-text');
+        const phrases = [
+            'Cybersecurity Research',
+            'CTF Competitions',
+            'Vulnerability Research',
+            'Web Security',
+            'Binary Analysis',
+            'Cryptography',
+            'Network Protocol Security',
+            'Mobile Security'
+        ];
+        
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isTyping = true;
+        let typingDelay = 100; // 打字速度
+        let erasingDelay = 50; // 删除速度
+        let newPhraseDelay = 2000; // 短语之间的延迟
+        
+        function type() {
+            if (isTyping && charIndex < phrases[phraseIndex].length) {
+                typingElement.textContent += phrases[phraseIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(type, typingDelay);
+            } else if (isTyping && charIndex >= phrases[phraseIndex].length) {
+                // 完成打字，等待一段时间后开始删除
+                isTyping = false;
+                setTimeout(type, newPhraseDelay);
+            } else if (!isTyping && charIndex > 0) {
+                // 删除文字
+                typingElement.textContent = phrases[phraseIndex].substring(0, charIndex - 1);
+                charIndex--;
+                setTimeout(type, erasingDelay);
+            } else if (!isTyping && charIndex === 0) {
+                // 完成删除，切换到下一个短语
+                isTyping = true;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                setTimeout(type, typingDelay);
+            }
+        }
+        
+        // 启动打字机效果
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(type, newPhraseDelay);
+        });
+
+        // 随机移动圆点
+        const circle = document.querySelector('.circle');
+        function moveCircle() {
+            const x = Math.random() * 80 + 10; // 10% 到 90%
+            const y = Math.random() * 80 + 10; // 10% 到 90%
+            
+            circle.style.left = `${x}%`;
+            circle.style.top = `${y}%`;
+            
+            // 随机大小
+            const size = Math.random() * 20 + 10; // 10px 到 30px
+            circle.style.width = `${size}px`;
+            circle.style.height = `${size}px`;
+            
+            // 随机透明度
+            const opacity = Math.random() * 0.5 + 0.3; // 0.3 到 0.8
+            circle.style.opacity = opacity;
+            
+            setTimeout(moveCircle, 3000);
+        }
+        
+        moveCircle();
+    </script>
+</body>
+</html> 

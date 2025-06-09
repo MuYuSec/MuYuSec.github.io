@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>木鱼安全实验室 - 团队介绍</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 添加网站图标 -->
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <!-- 添加Open Graph标签，用于社交媒体分享 -->
+    <meta property="og:title" content="木鱼安全实验室 - 团队介绍">
+    <meta property="og:description" content="木鱼安全实验室致力于网络安全研究与教育">
+    <meta property="og:image" content="img/logo.jpg">
+    <meta property="og:url" content="https://muyusec.github.io/about.html">
+    <style>
+        body {
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.4s ease;
+            background-color: transparent;
+        }
+        
+        header.scrolled {
+            background-color: rgba(17, 17, 17, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--light-color);
+        }
+        
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .logo span {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 5px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover:after, .nav-links a.active:after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--light-color);
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                flex-direction: column;
+                background-color: var(--dark-color);
+                padding: 20px 0;
+                text-align: center;
+                transition: all 0.5s ease;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+        }
+        
+        /* 全屏展示区域 */
+        .fullscreen-intro {
+            height: 100vh;
+            width: 100%;
+            background-color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .fullscreen-intro::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6));
+            z-index: 1;
+        }
+        
+        .fullscreen-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .fullscreen-title {
+            font-size: 6rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.5s;
+            white-space: nowrap;
+        }
+        
+        .fullscreen-title span {
+            color: var(--primary-color);
+        }
+        
+        .fullscreen-subtitle {
+            font-size: 1.8rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.8s;
+            margin-bottom: 40px;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--light-color);
+            font-size: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+        }
+        
+        .scroll-down i {
+            font-size: 2rem;
+            margin-top: 10px;
+        }
+        
+        /* 网格线背景 */
+        .grid-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(43, 43, 43, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(43, 43, 43, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+        }
+        
+        /* 下滑动画 */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+        
+        /* 原有样式修改 */
+        .about-section {
+            padding: 80px 0;
+            background-color: var(--bg-color);
+        }
+        
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .about-intro {
+            margin-bottom: 60px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .about-intro.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .about-intro-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        .about-stats {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin: 50px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .about-stats.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .stat-item {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 30px;
+            margin: 10px;
+            background-color: var(--dark-color);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, var(--primary-color), transparent);
+            border-radius: 50%;
+            opacity: 0.1;
+            top: -20px;
+            left: -20px;
+        }
+        
+        .stat-item h3 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .stat-item p {
+            font-size: 1rem;
+            color: var(--light-gray);
+        }
+        
+        .stat-icon {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            opacity: 0.8;
+            z-index: 2;
+        }
+        
+        .line-decoration {
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: var(--primary-color);
+            opacity: 0.5;
+        }
+        
+        .line-1 {
+            top: 10%;
+            left: 5%;
+            transform: rotate(45deg);
+        }
+        
+        .line-2 {
+            top: 30%;
+            right: 10%;
+            transform: rotate(-30deg);
+        }
+        
+        .line-3 {
+            bottom: 20%;
+            left: 15%;
+            transform: rotate(-60deg);
+        }
+        
+        .line-4 {
+            bottom: 10%;
+            right: 5%;
+            transform: rotate(20deg);
+        }
+        
+        .team-motto {
+            margin: 60px 0;
+            text-align: center;
+            position: relative;
+            padding: 40px 20px;
+            background-color: var(--dark-color);
+            border-radius: 8px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .team-motto.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .team-motto h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .team-motto h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .motto-text {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            font-style: italic;
+            color: var(--light-color);
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .motto-text::before,
+        .motto-text::after {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary-color);
+            opacity: 0.3;
+            position: absolute;
+            line-height: 1;
+        }
+        
+        .motto-text::before {
+            top: -20px;
+            left: -20px;
+        }
+        
+        .motto-text::after {
+            bottom: -40px;
+            right: -20px;
+        }
+        
+        @media (max-width: 768px) {
+            .fullscreen-title {
+                font-size: 3rem;
+            }
+            
+            .fullscreen-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .about-stats {
+                flex-direction: column;
+            }
+            
+            .stat-item {
+                margin: 10px 0;
+            }
+            
+            .motto-text {
+                font-size: 1.2rem;
+            }
+            
+            .motto-text::before,
+            .motto-text::after {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏容器 -->
+    <div id="navbar-container"></div>
+
+    <!-- 全屏团队名称展示 -->
+    <section class="fullscreen-intro">
+        <div class="grid-background"></div>
+        <div class="fullscreen-content">
+            <h1 class="fullscreen-title">木鱼<span>安全</span>实验室</h1>
+            <p class="fullscreen-subtitle">专注于网络安全研究，致力于高水平网络安全实验室建设</p>
+        </div>
+        <div class="scroll-down" id="scroll-down">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- 团队介绍内容 -->
+    <section class="about-section" id="about-content">
+        <div class="about-container">
+            <div class="about-intro">
+                <h2>团队简介</h2>
+                <div class="about-intro-content">
+                    <p>木鱼安全团队成立于2022年，是一支由湖南工程学院网络空间安全实验室建立的安全团队。团队致力于钻研网络安全技术，专注于CTF竞赛，渗透测试，漏洞挖掘，红蓝对抗等方向。</p>
+                    <p>团队旗下分有渗透攻防小组、CTF小组、开发运维小组、运营宣传小组，团队成员在长城杯及省赛国赛中取得优异成绩，在各大SRC漏洞平台都有提交漏洞报告，获得过上海交通大学，同济大学，太原理工大学等漏洞报送证书，以及CNVD证书等，并且在各市级、省级以及国家级攻防演练中表现出色，获得各单位的证书和感谢信。</p>
+                </div>
+                <div class="line-decoration line-3"></div>
+            </div>
+
+            <div class="about-stats">
+                <div class="stat-item">
+                    <i class="fas fa-calendar-alt stat-icon"></i>
+                    <h3>2022</h3>
+                    <p>成立于</p>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-users stat-icon"></i>
+                    <h3>4</h3>
+                    <p>专业小组</p>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-trophy stat-icon"></i>
+                    <h3>10+</h3>
+                    <p>安全竞赛奖项</p>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-certificate stat-icon"></i>
+                    <h3>20+</h3>
+                    <p>漏洞报告证书</p>
+                </div>
+            </div>
+
+            <!-- 团队格言 -->
+            <div class="team-motto">
+                <h2>团队格言</h2>
+                <div class="motto-text">
+                    知攻善防，守正出奇。
+                </div>
+                <div class="line-decoration line-4"></div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 滚动动画
+            window.addEventListener('scroll', function() {
+                // 滚动动画
+                const elements = document.querySelectorAll('.about-intro, .about-stats, .team-motto');
+                
+                elements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementTop < windowHeight - 100) {
+                        element.classList.add('visible');
+                    }
+                });
+            });
+            
+            // 点击向下滚动按钮
+            document.getElementById('scroll-down').addEventListener('click', function() {
+                const aboutContent = document.getElementById('about-content');
+                aboutContent.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // 线条动画效果
+            const lines = document.querySelectorAll('.line-decoration');
+            
+            function animateLines() {
+                lines.forEach((line, index) => {
+                    const delay = index * 200;
+                    setTimeout(() => {
+                        line.style.opacity = '0.5';
+                        setTimeout(() => {
+                            line.style.opacity = '0.2';
+                            setTimeout(() => {
+                                line.style.opacity = '0.5';
+                            }, 1000);
+                        }, 1000);
+                    }, delay);
+                });
+                
+                setTimeout(animateLines, 3000);
+            }
+            
+            animateLines();
+            
+            // 模拟滚动事件以触发初始动画
+            window.dispatchEvent(new Event('scroll'));
+        });
+    </script>
+</body>
+</html>
