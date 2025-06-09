@@ -13,6 +13,8 @@
     <meta property="og:description" content="木鱼安全实验室致力于网络安全研究与教育">
     <meta property="og:image" content="img/logo.jpg">
     <meta property="og:url" content="https://muyusec.github.io">
+    <!-- 添加访问统计脚本 -->
+    <script async src="//finicounter.eu.org/finicounter.js"></script>
     <style>
         /* 新导航栏样式 */
         header {
@@ -201,6 +203,15 @@
             z-index: 2;
         }
         
+        .visitor-stats {
+            margin-top: 5px;
+            font-size: 0.85rem;
+        }
+        
+        .visitor-stats span {
+            margin: 0 5px;
+        }
+        
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 3rem;
@@ -228,6 +239,10 @@
         </div>
         <div class="copyright">
             <p>&copy; 2022-2025 木鱼安全实验室.</p>
+            <div class="visitor-stats">
+                <span>访问量统计：</span>
+                <span id="finicount_views"></span>
+            </div>
         </div>
     </section>
 

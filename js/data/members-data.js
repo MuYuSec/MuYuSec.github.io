@@ -9,7 +9,7 @@ const membersData = {
         {
             name: 'Erika',
             role: '2022级负责人',
-            description: '',
+            description: '打杂项的人，心都很杂',
             avatar: 'img/team/Erika.jpg'
         },
         {
