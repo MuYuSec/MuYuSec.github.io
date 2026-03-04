@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>木鱼安全实验室 - CyberAscent计划</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <meta property="og:title" content="木鱼安全实验室 - CyberAscent计划">
+    <meta property="og:description" content="CyberAscent 网络安全 × AI 智能成长计划">
+    <meta property="og:image" content="img/logo.jpg">
+    <meta property="og:url" content="https://muyusec.github.io/cyberascent.html">
+</head>
+<body data-page="cyberascent">
+    <div id="navbar-container"></div>
+
+    <main>
+        <section class="hero">
+            <p class="hero-kicker" data-reveal>Training Program</p>
+            <h1 class="hero-title" data-reveal>CyberAscent<span>计划</span></h1>
+            <p class="hero-subtitle" data-reveal>网络安全 × AI 智能成长计划</p>
+        </section>
+
+        <section class="section section--tight">
+            <div class="section-intro" data-reveal>
+                <p class="eyebrow">Program Deck</p>
+                <h2 class="section-title">宣传PPT预览</h2>
+            </div>
+
+            <div class="embed-wrap" data-reveal id="cyberascent-preview">
+                <button class="embed-fullscreen-btn" id="preview-fullscreen-btn" type="button" aria-label="全屏展示PPT">
+                    <i class="fas fa-expand"></i>
+                    <span>全屏展示</span>
+                </button>
+                <iframe
+                    class="embed-frame"
+                    id="cyberascent-frame"
+                    src="cyberascent-program-promo.html"
+                    title="CyberAscent成长计划宣传PPT"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <span>&copy; 2022-2025 木鱼安全实验室</span>
+        <span>CyberAscent Program Channel</span>
+    </footer>
+
+    <script src="js/components.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const wrapper = document.getElementById('cyberascent-preview');
+            const button = document.getElementById('preview-fullscreen-btn');
+
+            if (!wrapper || !button) {
+                return;
+            }
+
+            const buttonIcon = button.querySelector('i');
+            const buttonText = button.querySelector('span');
+
+            const updateButtonState = () => {
+                const isFullscreen = document.fullscreenElement === wrapper;
+                wrapper.classList.toggle('is-fullscreen', isFullscreen);
+
+                if (buttonIcon) {
+                    buttonIcon.className = isFullscreen ? 'fas fa-compress' : 'fas fa-expand';
+                }
+
+                if (buttonText) {
+                    buttonText.textContent = isFullscreen ? '退出全屏' : '全屏展示';
+                }
+            };
+
+            button.addEventListener('click', async () => {
+                try {
+                    if (document.fullscreenElement === wrapper) {
+                        await document.exitFullscreen();
+                    } else {
+                        await wrapper.requestFullscreen();
+                    }
+                } catch (error) {
+                    console.error('全屏切换失败', error);
+                }
+            });
+
+            document.addEventListener('fullscreenchange', updateButtonState);
+            updateButtonState();
+        });
+    </script>
+</body>
+</html>

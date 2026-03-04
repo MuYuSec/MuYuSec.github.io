@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberAscent — 网络安全 × AI 智能成长计划</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E2C97E;
+  --gold-dim: rgba(201,168,76,0.15);
+  --gold-border: rgba(201,168,76,0.35);
+  --bg: #080808;
+  --bg-card: #111111;
+  --bg-card2: #161616;
+  --text: #F0EDE8;
+  --text-sub: #9A9590;
+  --text-dim: #555;
+  --font: 'Noto Sans SC', system-ui, sans-serif;
+  --font-display: 'Playfair Display', serif;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-snap-type:y mandatory; scroll-behavior:smooth; height:100%; }
+body { font-family:var(--font); background:var(--bg); color:var(--text); overflow-x:hidden; height:100%; -webkit-font-smoothing:antialiased; }
+
+/* ── SLIDE BASE ── */
+.slide {
+  width:100vw; height:100vh; height:100dvh;
+  scroll-snap-align:start;
+  display:flex; flex-direction:column; justify-content:center;
+  position:relative; overflow:hidden;
+  padding: 56px 80px;
+}
+/* outer gold frame */
+.slide::before {
+  content:''; position:absolute;
+  inset: 22px;
+  border: 1px solid var(--gold-border);
+  pointer-events:none; z-index:0;
+}
+/* top-left corner accent */
+.slide::after {
+  content:''; position:absolute;
+  top:14px; left:14px;
+  width:36px; height:36px;
+  border-top:2px solid var(--gold);
+  border-left:2px solid var(--gold);
+  pointer-events:none; z-index:1;
+}
+.corner-br {
+  position:absolute; bottom:14px; right:14px;
+  width:36px; height:36px;
+  border-bottom:2px solid var(--gold);
+  border-right:2px solid var(--gold);
+  pointer-events:none; z-index:1;
+}
+/* subtle ambient glow — no grid lines */
+.slide-glow {
+  position:absolute; pointer-events:none; z-index:0;
+  border-radius:50%;
+  background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+}
+
+.slide-inner {
+  position:relative; z-index:2;
+  max-width:1160px; width:100%; margin:0 auto;
+  display:flex; flex-direction:column; justify-content:center;
+  height:100%;
+}
+
+/* ── TYPOGRAPHY ── */
+.label {
+  font-family:var(--font-display);
+  font-size:11px; font-weight:600; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--gold);
+  margin-bottom:14px;
+}
+.h1 { font-size:clamp(2.6rem,5.5vw,4.2rem); font-weight:900; line-height:1.12; letter-spacing:-.01em; }
+.h2 { font-size:clamp(1.6rem,3.2vw,2.4rem); font-weight:700; line-height:1.25; }
+.h3 { font-size:clamp(1rem,1.8vw,1.25rem); font-weight:700; }
+.body { font-size:clamp(.8rem,1.3vw,.95rem); color:var(--text-sub); line-height:1.75; }
+.small { font-size:clamp(.7rem,1vw,.82rem); color:var(--text-sub); line-height:1.65; }
+.gold { color:var(--gold); }
+.gold-grad {
+  background: linear-gradient(120deg, var(--gold-light), var(--gold));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.rule {
+  width:48px; height:2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin-bottom:20px;
+}
+
+/* ── CARDS ── */
+.grid { display:grid; gap:14px; }
+.g2 { grid-template-columns:1fr 1fr; }
+.g3 { grid-template-columns:1fr 1fr 1fr; }
+.g4 { grid-template-columns:1fr 1fr 1fr 1fr; }
+.g5 { grid-template-columns:repeat(5,1fr); }
+
+.card {
+  background:var(--bg-card);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:6px;
+  padding:22px 24px;
+  transition:border-color .25s, transform .25s;
+}
+.card:hover { border-color:var(--gold-border); transform:translateY(-2px); }
+.card-title { font-size:clamp(.85rem,1.4vw,1rem); font-weight:700; color:var(--gold-light); margin-bottom:10px; }
+.card ul { list-style:none; }
+.card ul li {
+  font-size:clamp(.72rem,1.1vw,.85rem); color:var(--text-sub);
+  line-height:1.7; padding-left:14px; position:relative; margin-bottom:2px;
+}
+.card ul li::before {
+  content:''; position:absolute; left:0; top:9px;
+  width:5px; height:5px; border-radius:50%; background:var(--gold);
+}
+.card p { font-size:clamp(.72rem,1.1vw,.85rem); color:var(--text-sub); line-height:1.7; }
+
+/* card with top gold bar */
+.card-accent { border-top:2px solid var(--gold); }
+
+/* ── STAT ROW ── */
+.stat-row { display:flex; gap:14px; }
+.stat {
+  flex:1; background:var(--bg-card); border:1px solid rgba(255,255,255,0.06);
+  border-radius:6px; padding:22px 20px; text-align:center;
+  transition:border-color .25s;
+}
+.stat:hover { border-color:var(--gold-border); }
+.stat-num {
+  font-family:var(--font-display);
+  font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:900;
+  background:linear-gradient(135deg,var(--gold-light),var(--gold));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  line-height:1; margin-bottom:6px;
+}
+.stat-label { font-size:clamp(.7rem,1vw,.82rem); color:var(--text-sub); }
+
+/* ── TABLE ── */
+.tbl { width:100%; border-collapse:collapse; }
+.tbl th {
+  text-align:left; padding:13px 18px;
+  font-size:clamp(.72rem,1.1vw,.85rem); font-weight:700;
+  color:var(--gold); border-bottom:1px solid var(--gold-border);
+  background:rgba(201,168,76,0.06);
+}
+.tbl td {
+  padding:13px 18px;
+  font-size:clamp(.72rem,1.1vw,.85rem); color:var(--text-sub);
+  border-bottom:1px solid rgba(255,255,255,0.05); line-height:1.65;
+}
+.tbl tr:hover td { background:rgba(201,168,76,0.03); }
+.tbl-wrap { border:1px solid var(--gold-border); border-radius:6px; overflow:hidden; }
+
+/* ── BADGE ── */
+.badge {
+  display:inline-block; padding:4px 13px;
+  background:var(--gold-dim); border:1px solid var(--gold-border);
+  border-radius:20px; font-size:clamp(.65rem,.95vw,.78rem);
+  color:var(--gold-light); margin:3px 4px;
+}
+
+/* ── TIMELINE ── */
+.tl { display:flex; flex-direction:column; gap:10px; }
+.tl-item { display:flex; align-items:flex-start; gap:12px; }
+.tl-dot {
+  width:8px; height:8px; border-radius:50%; background:var(--gold);
+  margin-top:6px; flex-shrink:0;
+  box-shadow:0 0 8px rgba(201,168,76,.5);
+}
+.tl-text { font-size:clamp(.72rem,1.1vw,.85rem); color:var(--text-sub); line-height:1.65; }
+.tl-text strong { color:var(--text); }
+
+/* ── INSTRUCTOR ── */
+.inst { display:flex; gap:20px; align-items:flex-start; }
+.inst-av {
+  width:58px; height:58px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,#8B6914,var(--gold));
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.4rem; font-weight:900; color:#080808;
+  border:1px solid var(--gold-border);
+}
+.inst-name { font-size:clamp(.9rem,1.5vw,1.1rem); font-weight:700; color:var(--gold-light); }
+.inst-role { font-size:clamp(.68rem,.95vw,.78rem); color:var(--gold); margin:3px 0 8px; letter-spacing:.03em; }
+.inst-desc { font-size:clamp(.7rem,1.05vw,.82rem); color:var(--text-sub); line-height:1.7; }
+
+/* ── PROGRESS / NAV ── */
+.progress-bar {
+  position:fixed; top:0; left:0; height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-light));
+  z-index:200; transition:width .35s;
+}
+.nav-dots {
+  position:fixed; right:18px; top:50%; transform:translateY(-50%);
+  z-index:200; display:flex; flex-direction:column; gap:8px;
+}
+.nav-dot {
+  width:7px; height:7px; border-radius:50%;
+  background:var(--text-dim); border:none; cursor:pointer;
+  transition:all .25s; padding:0;
+}
+.nav-dot.active { background:var(--gold); box-shadow:0 0 8px rgba(201,168,76,.6); transform:scale(1.4); }
+.slide-counter {
+  position:fixed; bottom:22px; right:32px;
+  font-size:11px; color:var(--text-dim); z-index:200; letter-spacing:.1em;
+}
+
+/* ── REVEAL ANIMATION ── */
+.r { opacity:0; transform:translateY(20px); transition:opacity .55s cubic-bezier(.16,1,.3,1), transform .55s cubic-bezier(.16,1,.3,1); }
+.slide.vis .r { opacity:1; transform:translateY(0); }
+.r:nth-child(1){transition-delay:.05s}
+.r:nth-child(2){transition-delay:.12s}
+.r:nth-child(3){transition-delay:.19s}
+.r:nth-child(4){transition-delay:.26s}
+.r:nth-child(5){transition-delay:.33s}
+.r:nth-child(6){transition-delay:.40s}
+.r:nth-child(7){transition-delay:.47s}
+
+/* ── TOC ── */
+.toc-list { list-style:none; display:flex; flex-direction:column; gap:0; }
+.toc-item {
+  display:flex; align-items:center; gap:20px;
+  padding:18px 24px;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  cursor:pointer; transition:background .25s, border-color .25s;
+  border-left:2px solid transparent;
+}
+.toc-item:hover { background:rgba(201,168,76,0.04); border-left-color:var(--gold); }
+.toc-num {
+  font-family:var(--font-display);
+  font-size:clamp(1.4rem,2.5vw,2rem); font-weight:900;
+  background:linear-gradient(135deg,var(--gold-light),var(--gold));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  min-width:48px; text-align:right;
+}
+.toc-info { flex:1; }
+.toc-title { font-size:clamp(.95rem,1.6vw,1.15rem); font-weight:700; color:var(--text); margin-bottom:4px; }
+.toc-desc { font-size:clamp(.7rem,1vw,.82rem); color:var(--text-sub); }
+.toc-arrow { color:var(--text-dim); font-size:1.2rem; transition:color .25s, transform .25s; }
+.toc-item:hover .toc-arrow { color:var(--gold); transform:translateX(4px); }
+
+/* ── CHAPTER DIVIDER ── */
+.chapter-num {
+  font-family:var(--font-display);
+  font-size:clamp(4rem,8vw,7rem); font-weight:900;
+  background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(201,168,76,0.05));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  line-height:1; margin-bottom:8px;
+}
+.chapter-title {
+  font-size:clamp(1.8rem,4vw,3rem); font-weight:900; line-height:1.15;
+  margin-bottom:12px;
+}
+.chapter-sub {
+  font-size:clamp(.82rem,1.3vw,.95rem); color:var(--text-sub);
+  letter-spacing:.05em; line-height:1.7;
+}
+.chapter-line {
+  width:64px; height:3px;
+  background:linear-gradient(90deg,var(--gold),transparent);
+  margin-bottom:18px;
+}
+
+@media(max-width:900px){
+  .slide{padding:40px 32px;}
+  .g3,.g4,.g5{grid-template-columns:1fr 1fr;}
+  .stat-row{flex-wrap:wrap;}
+}
+@media(max-height:620px){
+  .slide{padding:32px 60px;}
+  .nav-dots{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<nav class="nav-dots" id="navDots"></nav>
+<div class="slide-counter" id="counter"></div>
+
+<!-- ===== SLIDE 1: COVER ===== -->
+<section class="slide" id="s1">
+<div class="slide-glow" style="width:600px;height:600px;top:-100px;right:-100px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner" style="align-items:center;text-align:center;justify-content:center;">
+  <div class="r label">CyberAscent Program · 木鱼安全 · 枢智出品</div>
+  <h1 class="h1 r" style="margin-bottom:16px;">
+    <span class="gold-grad" style="font-family:var(--font-display);">CyberAscent</span>
+  </h1>
+  <p class="r" style="font-size:clamp(1rem,2vw,1.3rem);color:var(--text-sub);letter-spacing:.05em;margin-bottom:10px;">网络安全 × AI 智能成长计划</p>
+  <p class="r" style="font-size:clamp(.8rem,1.3vw,.95rem);color:var(--text-dim);letter-spacing:.08em;margin-bottom:36px;">从零基础到安全专家的全面进阶路径  ·  传统攻防 × AI 深度融合</p>
+  <div class="r" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+    <span style="padding:8px 28px;border:1px solid var(--gold-border);border-radius:2px;font-size:.82rem;color:var(--gold);letter-spacing:.1em;">CTF 竞赛</span>
+    <span style="padding:8px 28px;border:1px solid rgba(255,255,255,.1);border-radius:2px;font-size:.82rem;color:var(--text-sub);letter-spacing:.1em;">渗透测试</span>
+    <span style="padding:8px 28px;border:1px solid rgba(255,255,255,.1);border-radius:2px;font-size:.82rem;color:var(--text-sub);letter-spacing:.1em;">红蓝对抗</span>
+    <span style="padding:8px 28px;border:1px solid rgba(255,255,255,.1);border-radius:2px;font-size:.82rem;color:var(--text-sub);letter-spacing:.1em;">AI 安全</span>
+    <span style="padding:8px 28px;border:1px solid rgba(255,255,255,.1);border-radius:2px;font-size:.82rem;color:var(--text-sub);letter-spacing:.1em;">漏洞挖掘</span>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 2: TABLE OF CONTENTS ===== -->
+<section class="slide" id="s-toc">
+<div class="slide-glow" style="width:500px;height:500px;bottom:-120px;left:-80px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner">
+  <div class="r rule"></div>
+  <h2 class="h2 r" style="margin-bottom:6px;">内容 <span class="gold">导览</span></h2>
+  <p class="r small" style="margin-bottom:22px;">五大章节，系统呈现 CyberAscent 计划全貌</p>
+  <div class="r" style="background:var(--bg-card);border:1px solid rgba(255,255,255,0.06);border-radius:6px;overflow:hidden;">
+    <ul class="toc-list">
+      <li class="toc-item" onclick="document.getElementById('s-ch1').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-num">01</div>
+        <div class="toc-info">
+          <div class="toc-title">痛点与价值</div>
+          <div class="toc-desc">你的困境，我们的解法 — 五大核心价值全面赋能</div>
+        </div>
+        <div class="toc-arrow">→</div>
+      </li>
+      <li class="toc-item" onclick="document.getElementById('s-ch2').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-num">02</div>
+        <div class="toc-info">
+          <div class="toc-title">课程体系</div>
+          <div class="toc-desc">传统攻防基石 × AI 安全实战，双轨并行深度融合</div>
+        </div>
+        <div class="toc-arrow">→</div>
+      </li>
+      <li class="toc-item" onclick="document.getElementById('s-ch3').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-num">03</div>
+        <div class="toc-info">
+          <div class="toc-title">成长生态</div>
+          <div class="toc-desc">技术社区 · 个性化路线 · 线上线下无缝衔接</div>
+        </div>
+        <div class="toc-arrow">→</div>
+      </li>
+      <li class="toc-item" onclick="document.getElementById('s-ch4').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-num">04</div>
+        <div class="toc-info">
+          <div class="toc-title">实力见证</div>
+          <div class="toc-desc">顶尖讲师天团 · 硬核数据背书 · 连续四年国家级实战</div>
+        </div>
+        <div class="toc-arrow">→</div>
+      </li>
+      <li class="toc-item" onclick="document.getElementById('s-ch5').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-num">05</div>
+        <div class="toc-info">
+          <div class="toc-title">专属权益</div>
+          <div class="toc-desc">独家亮点 · 福利体系 · 课程定价 · 加入我们</div>
+        </div>
+        <div class="toc-arrow">→</div>
+      </li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<!-- ===== CHAPTER 1 DIVIDER ===== -->
+<section class="slide" id="s-ch1">
+<div class="slide-glow" style="width:600px;height:600px;top:-150px;left:-100px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner" style="justify-content:center;">
+  <div class="r chapter-num">01</div>
+  <div class="r chapter-line"></div>
+  <h2 class="r chapter-title">痛点与 <span class="gold">价值</span></h2>
+  <p class="r chapter-sub">你的困境，我们的解法<br>五大核心价值，全方位赋能你的安全进阶之路</p>
+</div>
+</section>
+
+<!-- ===== SLIDE: PAIN POINTS ===== -->
+<section class="slide" id="s2">
+<div class="slide-glow" style="width:500px;height:500px;bottom:-150px;left:-100px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner">
+  <div class="r rule"></div>
+  <h2 class="h2 r" style="margin-bottom:6px;">你是否正面临这些 <span class="gold">困境</span>？</h2>
+  <p class="r small" style="margin-bottom:24px;">无论你处于哪个阶段，这里都有你的突破口</p>
+  <div class="grid g5 r" style="margin-bottom:20px;">
+    <div class="card card-accent">
+      <div class="card-title">零基础萌新</div>
+      <p>想入行网络安全，苦于没有系统学习路线，不知从何下手</p>
+      <p style="margin-top:8px;color:var(--gold);font-size:clamp(.65rem,1vw,.78rem);">我们从最基础的网络协议、Linux 操作开始，手把手带你入门</p>
+    </div>
+    <div class="card card-accent">
+      <div class="card-title">迷茫探索者</div>
+      <p>具备一定安全基础，但对后续细分方向和深入学习感到迷茫</p>
+      <p style="margin-top:8px;color:var(--gold);font-size:clamp(.65rem,1vw,.78rem);">导师一对一评估你的技术栈，精准规划最适合的细分方向</p>
+    </div>
+    <div class="card card-accent">
+      <div class="card-title">求职备战军</div>
+      <p>准备寻找实习或正式工作，急需提升核心实战能力应对大厂面试</p>
+      <p style="margin-top:8px;color:var(--gold);font-size:clamp(.65rem,1vw,.78rem);">模拟面试 + 简历精修 + 大厂内推，三位一体助你拿到心仪 Offer</p>
+    </div>
+    <div class="card card-accent">
+      <div class="card-title">瓶颈期选手</div>
+      <p>学习达到一定阶段后卡在瓶颈，不知如何实现技术维度的突破</p>
+      <p style="margin-top:8px;color:var(--gold);font-size:clamp(.65rem,1vw,.78rem);">通过高阶项目实战与大佬指导，帮你打破技术天花板</p>
+    </div>
+    <div class="card card-accent">
+      <div class="card-title">纸上谈兵型</div>
+      <p>理论知识倒背如流，但在实际动手挖洞和渗透时却无从下手</p>
+      <p style="margin-top:8px;color:var(--gold);font-size:clamp(.65rem,1vw,.78rem);">真实靶场环境 + SRC 实战挖洞，让理论转化为真正的战斗力</p>
+    </div>
+  </div>
+  <div class="r" style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:4px;padding:14px 22px;text-align:center;">
+    <span style="font-size:.88rem;color:var(--gold-light);letter-spacing:.05em;">我们提供定制化成长路径，帮你系统突破每一个阶段的瓶颈</span>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 3: CORE VALUE ===== -->
+<section class="slide" id="s3">
+<div class="slide-glow" style="width:500px;height:500px;top:-100px;right:-50px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner">
+  <div class="r rule"></div>
+  <h2 class="h2 r" style="margin-bottom:6px;">五大 <span class="gold">核心价值</span></h2>
+  <p class="r small" style="margin-bottom:22px;">全方位赋能，从技术到职业，从竞赛到变现</p>
+  <div class="grid g5 r" style="margin-bottom:18px;">
+    <div class="card">
+      <div class="card-title">全栈技术入门与进阶</div>
+      <ul>
+        <li>CTF 竞赛全方向覆盖</li>
+        <li>渗透测试实战体系</li>
+        <li>红蓝对抗核心技法</li>
+        <li>安全工具开发能力</li>
+        <li>前沿 AI 安全融合</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">赛事荣誉与丰厚履历</div>
+      <ul>
+        <li>CTF 及攻防赛事专业指导</li>
+        <li>国家级、省级公章奖项</li>
+        <li>公费旅游与丰厚奖金</li>
+        <li>获奖返现激励机制</li>
+        <li>拿奖即返，持续激励</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">实战变现与兼职机会</div>
+      <ul>
+        <li>SRC 漏洞挖掘实战</li>
+        <li>HW 护网行动参与</li>
+        <li>商业安全项目接单</li>
+        <li>单次项目收入可达万元</li>
+        <li>项目奖金支持</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">职业发展与升学护航</div>
+      <ul>
+        <li>就业指导与考研建议</li>
+        <li>简历精修与模拟面试</li>
+        <li>一线安全大厂内推</li>
+        <li>拒绝无成长空间企业</li>
+        <li>多元发展方向规划</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">顶尖圈层与人脉资源</div>
+      <ul>
+        <li>严格筛选的优质技术圈</li>
+        <li>名校研究生深度交流</li>
+        <li>一线大厂安全专家对接</li>
+        <li>直系学长社区支持</li>
+        <li>工作、竞赛、考研全覆盖</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== CHAPTER 2 DIVIDER ===== -->
+<section class="slide" id="s-ch2">
+<div class="slide-glow" style="width:600px;height:600px;bottom:-150px;right:-100px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner" style="justify-content:center;">
+  <div class="r chapter-num">02</div>
+  <div class="r chapter-line"></div>
+  <h2 class="r chapter-title">课程 <span class="gold">体系</span></h2>
+  <p class="r chapter-sub">传统攻防技术基石 × AI 安全实战应用<br>双轨并行，深度融合，打造全栈安全能力</p>
+</div>
+</section>
+
+<!-- ===== SLIDE 4: MODULE 1 ===== -->
+<section class="slide" id="s4">
+<div class="slide-glow" style="width:450px;height:450px;bottom:-100px;right:-80px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner">
+  <div class="r rule"></div>
+  <h2 class="h2 r" style="margin-bottom:6px;">模块一：<span class="gold">网络安全基石</span>与攻防核心</h2>
+  <p class="r small" style="margin-bottom:22px;">扎实的传统安全技术体系，从原理到实战全面覆盖</p>
+  <div class="grid g2 r">
+    <div class="card">
+      <div class="card-title">Web 安全基础与漏洞原理</div>
+      <ul>
+        <li>OWASP Top 10 深度解读与实战演练</li>
+        <li>SQL 注入、XSS、CSRF、SSRF 全链路分析</li>
+        <li>文件上传、反序列化、命令注入等高危漏洞</li>
+        <li>业务逻辑漏洞挖掘思路与绕过技巧</li>
+        <li>漏洞利用链构造与 PoC/EXP 编写</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">内网渗透测试与红蓝对抗</div>
+      <ul>
+        <li>信息收集、资产测绘与攻击面分析</li>
+        <li>横向移动、权限提升、域渗透全链路</li>
+        <li>内存马注入与免杀对抗技术</li>
+        <li>C2 框架使用与流量混淆技巧</li>
+        <li>蓝队溯源反制与应急响应实战</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">代码审计与 0day/1day 挖掘</div>
+      <ul>
+        <li>主流框架（Java/PHP/Python）审计方法论</li>
+        <li>反序列化漏洞深度挖掘与利用链构造</li>
+        <li>0day 漏洞挖掘逻辑与 Fuzz 测试技术</li>
+        <li>CVE 漏洞复现与 1day 快速武器化</li>
+        <li>自动化代码审计工具开发与使用</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">CTF 赛事专项训练</div>
+      <ul>
+        <li>Web / Pwn / Crypto / Misc / Reverse 全方向</li>
+        <li>历届国家级赛题深度解析与复盘</li>
+        <li>解题思路与方法论系统化训练</li>
+        <li>组队策略与赛场临场应变技巧</li>
+        <li>AI 辅助 CTF 解题效率提升实践</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 5: MODULE 2 AI ===== -->
+<section class="slide" id="s5">
+<div class="slide-glow" style="width:500px;height:500px;top:-80px;left:-80px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner">
+  <div class="r rule"></div>
+  <h2 class="h2 r" style="margin-bottom:6px;">模块二：<span class="gold">AI 安全</span>实战应用</h2>
+  <p class="r small" style="margin-bottom:22px;">业内稀缺的 AI × 安全融合课程，掌握未来核心竞争力</p>
+  <div class="grid g2 r">
+    <div class="card">
+      <div class="card-title">AI 赋能日常安全工作</div>
+      <ul>
+        <li>利用 LLM 进行高效自动化代码审计</li>
+        <li>AI 驱动的海量安全日志智能分析</li>
+        <li>快速编写与重构渗透测试脚本（Python/Go）</li>
+        <li>AI 辅助漏洞报告生成与修复建议</li>
+        <li>提示词工程在安全场景的深度应用</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">智能 Agent 开发与自动化渗透</div>
+      <ul>
+        <li>网络安全专属 AI Agent 架构设计</li>
+        <li>结合子域名枚举、资产测绘引擎的工具链</li>
+        <li>自动规划扫描路径、执行漏洞检测</li>
+        <li>分布式扫描机器人与报告自动生成</li>
+        <li>从单体 Agent 到企业级多智能体协作</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">大模型（LLM）自身安全攻防</div>
+      <ul>
+        <li>OWASP Top 10 for LLMs 深度解读</li>
+        <li>提示词注入（Prompt Injection）实战演练</li>
+        <li>数据投毒、模型劫持攻击手法</li>
+        <li>AI 系统安全评估与红队测试方法</li>
+        <li>大模型安全防御策略与加固方案</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">AI 驱动的安全研发工作流</div>
+      <ul>
+        <li>规范驱动开发（SDD）模式实践</li>
+        <li>AI 编程助手在安全工具研发中的应用</li>
+        <li>Golang 高并发资产测绘系统开发</li>
+        <li>Master/Worker 分布式扫描平台架构</li>
+        <li>安全工具研发效率成倍提升实践</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== CHAPTER 3 DIVIDER ===== -->
+<section class="slide" id="s-ch3">
+<div class="slide-glow" style="width:600px;height:600px;top:-120px;right:-80px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner" style="justify-content:center;">
+  <div class="r chapter-num">03</div>
+  <div class="r chapter-line"></div>
+  <h2 class="r chapter-title">成长 <span class="gold">生态</span></h2>
+  <p class="r chapter-sub">技术社区 · 个性化路线规划 · 线上线下无缝衔接<br>不只是课程，更是一个有温度、有深度的安全技术生态圈</p>
+</div>
+</section>
+
+<!-- ===== SLIDE 6: COMMUNITY & ECOSYSTEM ===== -->
+<section class="slide" id="s6">
+<div class="slide-glow" style="width:480px;height:480px;bottom:-120px;right:-60px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner">
+  <div class="r rule"></div>
+  <h2 class="h2 r" style="margin-bottom:6px;">打造属于你的 <span class="gold">技术生态圈</span></h2>
+  <p class="r small" style="margin-bottom:22px;">不只是课程，更是一个有温度、有深度的安全技术社区</p>
+  <div class="grid g3 r">
+    <div class="card">
+      <div class="card-title">技术社区平台</div>
+      <ul>
+        <li>自建技术社区站点（资源网站 + 工具合集）</li>
+        <li>在线靶场环境，随时练手不断线</li>
+        <li>资源共享，项目互相帮助协作</li>
+        <li>氛围友好、技术浓厚的圈子文化</li>
+        <li>参考棉花糖模式，持续迭代建设</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">专属知识星球社区</div>
+      <ul>
+        <li>沉淀内部资料、技术文档与实战案例</li>
+        <li>打造我们自己的知识星球社区</li>
+        <li>SRC 挖掘经验、高级代码审计案例</li>
+        <li>内部自研智能化工具使用权</li>
+        <li>源码级学习机会，站在巨人肩膀上</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">AI 智能学习助手</div>
+      <ul>
+        <li>打造属于我们的专属 AI 智能体</li>
+        <li>帮助同学们进行个性化学习规划</li>
+        <li>智能化答疑，随时解答实战疑难</li>
+        <li>AI 辅助 CTF 解题与漏洞分析</li>
+        <li>持续学习迭代，越用越聪明</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">直系学长社区</div>
+      <ul>
+        <li>都是直系学长，真实经验无保留分享</li>
+        <li>工作、项目、挖洞、竞赛、考研全覆盖</li>
+        <li>多元发展方向，找到最适合你的路</li>
+        <li>一对一甚至多对一深度指导</li>
+        <li>长期陪伴，不是一次性服务</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">项目实战支持</div>
+      <ul>
+        <li>稳定的企业级项目后端支持</li>
+        <li>更多真实项目实践机会</li>
+        <li>参与 Golang 高并发资产测绘系统</li>
+        <li>分布式扫描平台等真实项目研发</li>
+        <li>项目奖金支持，实战即变现</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">大佬资源对接</div>
+      <ul>
+        <li>邀请腾讯、阿里、长亭等红队大佬</li>
+        <li>不定期分享一线前沿技术</li>
+        <li>线下面对面指导与深度交流</li>
+        <li>大厂内推直通车，拒绝无成长企业</li>
+        <li>顶级人脉网络，圈子决定天花板</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 7: PERSONALIZED ROADMAP ===== -->
+<section class="slide" id="s7">
+<div class="slide-glow" style="width:480px;height:480px;top:-80px;right:-60px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner">
+  <div class="r rule"></div>
+  <h2 class="h2 r" style="margin-bottom:6px;">专属 <span class="gold">成长路线规划书</span></h2>
+  <p class="r small" style="margin-bottom:22px;">针对每一个人的技术栈与发展方向，制定独一无二的个性化路径</p>
+  <div class="grid g2 r" style="margin-bottom:14px;">
+    <div class="card">
+      <div class="card-title">智能能力评估</div>
+      <ul>
+        <li>入学前全面技术栈摸底评估</li>
+        <li>精准定位薄弱点与核心突破口</li>
+        <li>结合发展方向制定差异化路线</li>
+        <li>动态调整，随学习进度持续优化</li>
+        <li>少走绝大部分自学弯路</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">多元发展方向</div>
+      <ul>
+        <li>CTF 竞赛选手 — 赛事荣誉与奖金</li>
+        <li>漏洞研究员 — SRC / CNVD 挖洞变现</li>
+        <li>红队攻击手 — HW 护网实战参与</li>
+        <li>安全研发工程师 — 工具与平台开发</li>
+        <li>AI 安全专家 — 前沿方向领跑</li>
+      </ul>
+    </div>
+  </div>
+  <div class="r" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+    <div style="background:var(--bg-card);border:1px solid var(--gold-border);border-radius:4px;padding:12px 20px;text-align:center;flex:1;min-width:120px;">
+      <div style="font-size:.72rem;color:var(--text-dim);margin-bottom:4px;">STEP 01</div>
+      <div style="font-size:.85rem;color:var(--text);font-weight:600;">能力评估</div>
+    </div>
+    <div style="color:var(--gold);font-size:1.2rem;">→</div>
+    <div style="background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:12px 20px;text-align:center;flex:1;min-width:120px;">
+      <div style="font-size:.72rem;color:var(--text-dim);margin-bottom:4px;">STEP 02</div>
+      <div style="font-size:.85rem;color:var(--text);font-weight:600;">路线定制</div>
+    </div>
+    <div style="color:var(--gold);font-size:1.2rem;">→</div>
+    <div style="background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:12px 20px;text-align:center;flex:1;min-width:120px;">
+      <div style="font-size:.72rem;color:var(--text-dim);margin-bottom:4px;">STEP 03</div>
+      <div style="font-size:.85rem;color:var(--text);font-weight:600;">实战训练</div>
+    </div>
+    <div style="color:var(--gold);font-size:1.2rem;">→</div>
+    <div style="background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:12px 20px;text-align:center;flex:1;min-width:120px;">
+      <div style="font-size:.72rem;color:var(--text-dim);margin-bottom:4px;">STEP 04</div>
+      <div style="font-size:.85rem;color:var(--text);font-weight:600;">动态调整</div>
+    </div>
+    <div style="color:var(--gold);font-size:1.2rem;">→</div>
+    <div style="background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:12px 20px;text-align:center;flex:1;min-width:120px;">
+      <div style="font-size:.72rem;color:var(--text-dim);margin-bottom:4px;">STEP 05</div>
+      <div style="font-size:.85rem;color:var(--text);font-weight:600;">目标达成</div>
+    </div>
+    <div style="color:var(--gold);font-size:1.2rem;">→</div>
+    <div style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:4px;padding:12px 20px;text-align:center;flex:1;min-width:120px;">
+      <div style="font-size:.72rem;color:var(--gold);margin-bottom:4px;">RESULT</div>
+      <div style="font-size:.85rem;color:var(--gold-light);font-weight:700;">安全专家</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 8: OFFLINE & EVENTS ===== -->
+<section class="slide" id="s8">
+<div class="slide-glow" style="width:480px;height:480px;bottom:-100px;left:-80px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner">
+  <div class="r rule"></div>
+  <h2 class="h2 r" style="margin-bottom:6px;">线上线下 <span class="gold">无缝衔接</span></h2>
+  <p class="r small" style="margin-bottom:22px;">不止于线上课程，更有丰富的线下活动与面对面深度交流</p>
+  <div class="grid g3 r" style="margin-bottom:14px;">
+    <div class="card">
+      <div class="card-title">定期线下分享会</div>
+      <ul>
+        <li>寒暑假不定期线下闭门培训</li>
+        <li>面对面技术茶话会与深度交流</li>
+        <li>大型 CTF 赛事复盘与解题分享</li>
+        <li>实战项目经验交流与案例分析</li>
+        <li>搭建坚实人脉网络，拓展圈层</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">大佬专场技术分享</div>
+      <ul>
+        <li>邀请腾讯安全红队核心成员</li>
+        <li>阿里云安全、长亭科技技术专家</li>
+        <li>不定期分享一线前沿攻防技术</li>
+        <li>线下面对面指导与答疑</li>
+        <li>独家内推资源与职业发展建议</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">团建与社群活动</div>
+      <ul>
+        <li>定期小福利与团建活动</li>
+        <li>线下 CTF 组队参赛支持</li>
+        <li>技术圈层聚会与思维碰撞</li>
+        <li>白帽思维培养与顶级视野拓展</li>
+        <li>终身学习，与技术演进同频</li>
+      </ul>
+    </div>
+  </div>
+  <div class="r" style="display:flex;gap:14px;">
+    <div style="flex:1;background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:16px 20px;">
+      <div style="font-size:.78rem;color:var(--gold);font-weight:600;margin-bottom:6px;">线上学习</div>
+      <div style="font-size:.8rem;color:var(--text-sub);line-height:1.7;">课程录播随时随地灵活学习 · 一次报名永久免费 · 每期更新持续跟进 · 智能化知识库随时答疑</div>
+    </div>
+    <div style="flex:1;background:var(--bg-card);border:1px solid var(--gold-border);border-radius:4px;padding:16px 20px;">
+      <div style="font-size:.78rem;color:var(--gold);font-weight:600;margin-bottom:6px;">线下活动</div>
+      <div style="font-size:.8rem;color:var(--text-sub);line-height:1.7;">寒暑假闭门培训 · 大佬专场分享 · 团建聚会 · CTF 组队参赛 · 面对面 1V1 指导</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== CHAPTER 4 DIVIDER ===== -->
+<section class="slide" id="s-ch4">
+<div class="slide-glow" style="width:600px;height:600px;bottom:-120px;left:-80px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner" style="justify-content:center;">
+  <div class="r chapter-num">04</div>
+  <div class="r chapter-line"></div>
+  <h2 class="r chapter-title">实力 <span class="gold">见证</span></h2>
+  <p class="r chapter-sub">顶尖讲师天团 · 硬核数据背书<br>连续四年国家级实战，用战绩说话</p>
+</div>
+</section>
+
+<!-- ===== SLIDE 9: INSTRUCTOR TEAM ===== -->
+<section class="slide" id="s9">
+<div class="slide-glow" style="width:480px;height:480px;top:-80px;right:-60px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner">
+  <div class="r rule"></div>
+  <h2 class="h2 r" style="margin-bottom:6px;">顶尖 <span class="gold">讲师天团</span></h2>
+  <p class="r small" style="margin-bottom:22px;">一线大厂红队 + 名校研究生，真实实战经验倾囊相授</p>
+  <div style="display:flex;flex-direction:column;gap:14px;">
+    <div class="card r">
+      <div class="inst">
+        <div class="inst-av">Q</div>
+        <div>
+          <div class="inst-name">Qiu &nbsp;<span style="font-size:.75rem;color:var(--text-dim);font-weight:400;">木鱼安全创始人</span></div>
+          <div class="inst-role">前一线互联网大厂红队核心成员 · 现任某科技公司安全负责人</div>
+          <div class="inst-desc">极度擅长挖掘 0day/1day 漏洞及自动化利用武器开发，对反序列化漏洞、内存马注入及内网渗透有极深造诣。曾多次作为核心攻击手参与国家级、省级大型攻防演练，涵盖石油、电网、水利、网信办及 Top 级高校等关键基础设施。近期专注 AI 大模型风险评估与数据安全治理前沿研究与落地。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card r">
+      <div class="inst">
+        <div class="inst-av">L</div>
+        <div>
+          <div class="inst-name">lhTings &nbsp;<span style="font-size:.75rem;color:var(--text-dim);font-weight:400;">木鱼安全创始人 · AI 安全方向</span></div>
+          <div class="inst-role">教育行业 SRC 2023 年度榜第 73 名 · 各大 SRC 高质量漏洞 200+ · 护网蓝队核心</div>
+          <div class="inst-desc">木鱼安全创始人，西南石油大学硕士在读（方向为 AI 安全）。在网络安全领域实战经验丰富，曾获第一届长城杯全国三等奖、湖南省湘军杯一等奖、全国大学生信息安全竞赛华中赛区二等奖等多项荣誉。多次参与国家护网行动、地方攻防演练及公安溯源项目，具备蓝队防守与红队攻击双重经验。各大 SRC 平台累计提交漏洞 200 余个，获评教育行业 SRC 2023 年榜第 73 名，并持有 CNVD 原创漏洞证书、EDUSRC 漏洞报送证书。善于将理论与实战结合，授课风格务实生动。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card r">
+      <div class="inst">
+        <div class="inst-av">S</div>
+        <div>
+          <div class="inst-name">S1nyer &nbsp;<span style="font-size:.75rem;color:var(--text-dim);font-weight:400;">二进制安全讲师</span></div>
+          <div class="inst-role">国家级网安赛事出题人 · 逆向工程与漏洞利用专家</div>
+          <div class="inst-desc">木鱼安全创始人之一，有丰富的二进制安全经验，曾担任某国家级网安赛事出题人，擅长逆向工程、二进制漏洞利用、安全开发与代码审计，拥有从漏洞挖掘、利用到安全工具开发的全链路技术能力。长期专注于 Pwn / Reverse 方向训练与攻防实践。</div>
+        </div>
+      </div>
+    </div>
+    <div class="card r">
+      <div class="inst">
+        <div class="inst-av">E</div>
+        <div>
+          <div class="inst-name">Erika &nbsp;<span style="font-size:.75rem;color:var(--text-dim);font-weight:400;">红蓝对抗与流量分析专家</span></div>
+          <div class="inst-role">多项全国性赛事获奖 · 红蓝双向实战能力</div>
+          <div class="inst-desc">拥有成熟的红蓝双向对抗能力，擅长外网资产梳理打点、流量分析、内存取证、安全告警研判与应急响应，攻防与研判能力兼备。曾斩获第二届长城杯全国三等奖、全国软件创新大赛华南赛区一等奖、湖南省程序设计大赛攻防赛一等奖等多项荣誉。深度参与网信办重点安全保障、安全产品运维及平台升级维护等项目，实战项目经验丰富，课程风格务实落地、易懂易学。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 10: STATS & HONORS ===== -->
+<section class="slide" id="s10">
+<div class="slide-glow" style="width:480px;height:480px;bottom:-100px;right:-60px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner">
+  <div class="r rule"></div>
+  <h2 class="h2 r" style="margin-bottom:6px;">实力 <span class="gold">数据背书</span></h2>
+  <p class="r small" style="margin-bottom:20px;">连续四年国家级实战，硬核战绩说话</p>
+  <div class="stat-row r" style="margin-bottom:14px;">
+    <div class="stat"><div class="stat-num">10+</div><div class="stat-label">CTF 赛事获奖项目</div></div>
+    <div class="stat"><div class="stat-num">4 年</div><div class="stat-label">连续参与国家级 HW</div></div>
+    <div class="stat"><div class="stat-num">200+</div><div class="stat-label">SRC 高质量漏洞提交</div></div>
+    <div class="stat"><div class="stat-num">Top 3</div><div class="stat-label">关键行业护网排名</div></div>
+  </div>
+  <div class="grid g2 r">
+    <div class="card">
+      <div class="card-title">CTF 赛事荣誉（部分）</div>
+      <div class="tl">
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-text"><strong>2025 全国大学生信息安全竞赛</strong> — 西南赛区一等奖</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-text"><strong>2025 软件安全大赛半决赛</strong> — 一等奖</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-text"><strong>2025 全国信息安全与对抗技术竞赛</strong> — 全国三等奖</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-text"><strong>2025 腾讯云黑客松智能渗透挑战赛</strong> — 全国第 33 名</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-text"><strong>2024/2025 第一届长城杯决赛</strong> — 全国三等奖</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-text"><strong>2024 全国大学生信息安全竞赛</strong> — 华中赛区二等奖</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-text"><strong>2023 湘军杯</strong> — 一等奖</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">攻防演练 & 漏洞认可</div>
+      <div class="tl">
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-text">2022-2025 连续参与<strong>国家级 HW 行动</strong></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-text">某关键行业护网<strong>稳居前三</strong>，连续多年</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-text">某 Top2 顶尖大学攻防演练<strong>红队前三</strong></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-text"><strong>CNVD</strong> 原创漏洞证书若干</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-text"><strong>EDUSRC</strong> 高校漏洞报送证书若干</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-text">公安部反诈工作<strong>部级案件成果表彰</strong></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-text">水利厅级单位、公安部门<strong>官方感谢信</strong></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== CHAPTER 5 DIVIDER ===== -->
+<section class="slide" id="s-ch5">
+<div class="slide-glow" style="width:600px;height:600px;top:-100px;left:-100px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner" style="justify-content:center;">
+  <div class="r chapter-num">05</div>
+  <div class="r chapter-line"></div>
+  <h2 class="r chapter-title">专属 <span class="gold">权益</span></h2>
+  <p class="r chapter-sub">独家亮点 · 福利体系 · 课程定价<br>超越普通培训，构建完整的成长生态系统</p>
+</div>
+</section>
+
+<!-- ===== SLIDE 11: EXCLUSIVE HIGHLIGHTS ===== -->
+<section class="slide" id="s11">
+<div class="slide-glow" style="width:480px;height:480px;top:-80px;left:-60px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner">
+  <div class="r rule"></div>
+  <h2 class="h2 r" style="margin-bottom:6px;">计划 <span class="gold">独家亮点</span></h2>
+  <p class="r small" style="margin-bottom:22px;">超越普通培训，构建完整的成长生态系统</p>
+  <div class="grid g3 r" style="margin-bottom:14px;">
+    <div class="card">
+      <div class="card-title">AI Agent 架构开发</div>
+      <ul>
+        <li>从单体 Agent 到企业级多智能体协作</li>
+        <li>任务规划、记忆管理、工具调用核心模块</li>
+        <li>高并发、可观测的智能体平台实战构建</li>
+        <li>支持多人协同的分布式 Agent 系统</li>
+        <li>不只会用，更能从零设计落地</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">企业级项目深度参与</div>
+      <ul>
+        <li>Golang 高并发资产测绘系统研发</li>
+        <li>Master/Worker 分布式扫描平台</li>
+        <li>AI 逻辑与安全业务完美结合实践</li>
+        <li>真实项目架构，拒绝简单单机脚本</li>
+        <li>项目奖金支持，实战即变现</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">动态 1V1 学习路线</div>
+      <ul>
+        <li>结合智能能力评估制定专属路线</li>
+        <li>精准定位技术薄弱点与突破口</li>
+        <li>动态调整，随进度持续优化</li>
+        <li>大厂导师与名校研究生 1V1 答疑</li>
+        <li>定制专属直播，按需深度辅导</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">顶级内部资源共享</div>
+      <ul>
+        <li>实战检验的优质内部资料库</li>
+        <li>SRC 挖掘、高级代码审计案例</li>
+        <li>内部自研智能化工具使用权</li>
+        <li>源码级学习机会，站在巨人肩膀上</li>
+        <li>内部智能化知识库随时解答疑难</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">高质量技术圈层</div>
+      <ul>
+        <li>定期技术分享会与实战经验交流</li>
+        <li>大型 CTF 赛事复盘与解题分析</li>
+        <li>探讨大模型自动化漏洞挖掘逻辑</li>
+        <li>培养顶级白帽思维与安全视野</li>
+        <li>圈子决定天花板，严格筛选成员</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">终身学习权益</div>
+      <ul>
+        <li>课程录播随时随地灵活学习</li>
+        <li>一次报名，永久免费更新</li>
+        <li>传统攻防技术迭代持续跟进</li>
+        <li>AI 安全新领域拓展同步获取</li>
+        <li>终身受用，与技术演进同频</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 12: BENEFITS & WELFARE ===== -->
+<section class="slide" id="s12">
+<div class="slide-glow" style="width:480px;height:480px;bottom:-100px;right:-60px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner">
+  <div class="r rule"></div>
+  <h2 class="h2 r" style="margin-bottom:6px;">专属 <span class="gold">福利体系</span></h2>
+  <p class="r small" style="margin-bottom:22px;">不只是学习，更有丰厚激励与持续支持</p>
+  <div class="grid g4 r" style="margin-bottom:14px;">
+    <div class="card card-accent">
+      <div class="card-title">获奖返现激励</div>
+      <ul>
+        <li>CTF 赛事获奖即返现</li>
+        <li>国家级奖项重点奖励</li>
+        <li>省级、市级赛事同享</li>
+        <li>拿奖越多，返现越多</li>
+        <li>持续激励，越战越勇</li>
+      </ul>
+    </div>
+    <div class="card card-accent">
+      <div class="card-title">项目奖金支持</div>
+      <ul>
+        <li>参与企业级项目获奖金</li>
+        <li>SRC 漏洞挖掘变现支持</li>
+        <li>HW 护网行动收益分享</li>
+        <li>商业安全项目接单机会</li>
+        <li>单次项目收入可达万元</li>
+      </ul>
+    </div>
+    <div class="card card-accent">
+      <div class="card-title">定期小福利</div>
+      <ul>
+        <li>不定期惊喜福利发放</li>
+        <li>技术书籍与学习资源</li>
+        <li>安全工具与会员权益</li>
+        <li>团建活动费用支持</li>
+        <li>线下聚会与交流活动</li>
+      </ul>
+    </div>
+    <div class="card card-accent">
+      <div class="card-title">推荐奖励机制</div>
+      <ul>
+        <li>全程实战班推荐奖 500 元</li>
+        <li>线上强化班推荐奖 300-400 元</li>
+        <li>三人成团享团购优惠</li>
+        <li>五人成团最大优惠力度</li>
+        <li>推荐越多，奖励越丰厚</li>
+      </ul>
+    </div>
+  </div>
+  <div class="r" style="display:flex;gap:14px;">
+    <div style="flex:1;background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:4px;padding:16px 22px;text-align:center;">
+      <div style="font-size:.82rem;color:var(--gold-light);font-weight:700;margin-bottom:4px;">全程实战班推荐奖励</div>
+      <div style="font-size:1.6rem;font-weight:900;color:var(--gold);">¥500</div>
+    </div>
+    <div style="flex:1;background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:16px 22px;text-align:center;">
+      <div style="font-size:.82rem;color:var(--text-sub);font-weight:600;margin-bottom:4px;">线上强化班推荐奖励</div>
+      <div style="font-size:1.6rem;font-weight:900;color:var(--gold);">¥300-400</div>
+    </div>
+    <div style="flex:2;background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:16px 22px;">
+      <div style="font-size:.78rem;color:var(--gold);font-weight:600;margin-bottom:6px;">成团优惠</div>
+      <div style="font-size:.8rem;color:var(--text-sub);line-height:1.8;">三人成团 ¥13,388/人 &nbsp;·&nbsp; 五人成团 ¥12,888/人 &nbsp;·&nbsp; 拼团越多优惠越大</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 13: PRICING ===== -->
+<section class="slide" id="s13">
+<div class="slide-glow" style="width:480px;height:480px;top:-80px;right:-60px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner">
+  <div class="r rule"></div>
+  <h2 class="h2 r" style="margin-bottom:6px;">投资自己：<span class="gold">课程定价</span></h2>
+  <p class="r small" style="margin-bottom:22px;">精细化运营，严格控制人数，保证每位学员的服务质量</p>
+  <div class="tbl-wrap r" style="margin-bottom:16px;">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>班型</th>
+          <th>价格 (RMB)</th>
+          <th>服务内容</th>
+          <th>成团优惠</th>
+          <th>推荐奖励</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--gold-light);font-weight:700;font-size:.9rem;">CyberAscent Alpha 计划</td>
+          <td style="color:var(--gold);font-weight:900;font-size:1.1rem;">¥13,888</td>
+          <td>以高质量社群运营为核心：核心课程全量开放 · 录播终身可看 · 高优先级 1V1 / 多对一技术辅导 · 深度参与企业级安全与 AI Agent 项目 · 内部资源库、脚本与工具链长期共享 · 项目机会与漏洞挖掘/赛事战队长期绑定</td>
+          <td style="color:var(--gold-light);">三人 ¥13,388/人<br>五人 ¥12,888/人</td>
+          <td style="color:var(--gold);font-weight:700;">¥500</td>
+        </tr>
+        <tr>
+          <td style="color:var(--text);font-weight:700;">CyberAscent Core 课栈</td>
+          <td style="color:var(--gold);font-weight:900;font-size:1.1rem;">¥6,888</td>
+          <td>以课程与答疑为主：系统覆盖网络安全 × AI 安全核心知识 · 标准化课件与案例 · 固定节奏直播/录播答疑与作业点评 · 核心项目思路与 Demo 级实践指导 · 进入学习社群，享基础资源与日常技术讨论</td>
+          <td style="color:var(--text-sub);">—</td>
+          <td style="color:var(--gold);font-weight:700;">¥300-400</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid g4 r">
+    <div style="background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:16px 18px;text-align:center;">
+      <div style="font-size:.72rem;color:var(--text-dim);margin-bottom:6px;">终身权益</div>
+      <div style="font-size:.85rem;color:var(--text);font-weight:600;">录播课程永久可看 · 新增内容同步解锁 · 社群终身在列</div>
+    </div>
+    <div style="background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:16px 18px;text-align:center;">
+      <div style="font-size:.72rem;color:var(--text-dim);margin-bottom:6px;">获奖激励</div>
+      <div style="font-size:.85rem;color:var(--text);font-weight:600;">拿奖即返现</div>
+    </div>
+    <div style="background:var(--bg-card);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:16px 18px;text-align:center;">
+      <div style="font-size:.72rem;color:var(--text-dim);margin-bottom:6px;">项目支持</div>
+      <div style="font-size:.85rem;color:var(--text);font-weight:600;">奖金 + 实战机会</div>
+    </div>
+    <div style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:4px;padding:16px 18px;text-align:center;">
+      <div style="font-size:.72rem;color:var(--gold);margin-bottom:6px;">限额招募</div>
+      <div style="font-size:.85rem;color:var(--gold-light);font-weight:700;">精细化运营</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 14: WHY US ===== -->
+<section class="slide" id="s14">
+<div class="slide-glow" style="width:480px;height:480px;bottom:-100px;left:-60px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner">
+  <div class="r rule"></div>
+  <h2 class="h2 r" style="margin-bottom:6px;">为什么选择 <span class="gold">我们</span>？</h2>
+  <p class="r small" style="margin-bottom:22px;">不是普通培训机构，是真正陪你成长的技术伙伴</p>
+  <div class="grid g3 r" style="margin-bottom:14px;">
+    <div class="card">
+      <div class="card-title">硬核实战背书</div>
+      <ul>
+        <li>连续 4 年国家级 HW 行动参与</li>
+        <li>10+ 项 CTF 国家级、省级大奖</li>
+        <li>200+ SRC 高质量漏洞提交记录</li>
+        <li>CNVD / EDUSRC 官方认可证书</li>
+        <li>公安部部级表彰，官方感谢信</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">AI × 安全稀缺融合</div>
+      <ul>
+        <li>业内稀缺的 AI 安全融合课程体系</li>
+        <li>LLM 安全攻防前沿研究与实践</li>
+        <li>AI Agent 开发从入门到企业级</li>
+        <li>AI 驱动安全研发工作流落地</li>
+        <li>掌握未来核心竞争力</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">完整生态系统</div>
+      <ul>
+        <li>技术社区 + 知识星球 + AI 助手</li>
+        <li>直系学长社区，多元发展方向</li>
+        <li>腾讯、阿里、长亭大佬资源对接</li>
+        <li>线上线下无缝衔接，终身陪伴</li>
+        <li>一次报名，永久免费更新</li>
+      </ul>
+    </div>
+  </div>
+  <div class="r" style="display:flex;gap:10px;flex-wrap:wrap;">
+    <span class="badge">1V1 定制路线</span>
+    <span class="badge">大厂内推直通</span>
+    <span class="badge">企业级项目实战</span>
+    <span class="badge">获奖返现激励</span>
+    <span class="badge">项目奖金支持</span>
+    <span class="badge">线下茶话会</span>
+    <span class="badge">顶级圈层人脉</span>
+    <span class="badge">AI 智能助手</span>
+    <span class="badge">终身学习权益</span>
+    <span class="badge">在线靶场环境</span>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 15: CTA ===== -->
+<section class="slide" id="s15">
+<div class="slide-glow" style="width:600px;height:600px;top:-100px;right:-100px;"></div>
+<div class="corner-br"></div>
+<div class="slide-inner" style="align-items:center;text-align:center;justify-content:center;">
+  <div class="r label">Start Your Journey · 立即开启安全进阶之路</div>
+  <h1 class="h1 r" style="margin-bottom:16px;">
+    <span class="gold-grad" style="font-family:var(--font-display);">Join Us</span>
+  </h1>
+  <p class="r" style="font-size:clamp(.9rem,1.6vw,1.1rem);color:var(--text-sub);max-width:560px;line-height:1.8;margin-bottom:32px;">
+    添加微信，备注「CyberAscent」，方便我知道你是哪边来的<br>
+    <span style="font-size:.82rem;color:var(--text-dim);">精细化运营，限额招募，保证每位学员的服务质量</span>
+  </p>
+  <div class="r" style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:32px;">
+    <div style="background:var(--bg-card);border:1px solid var(--gold-border);border-radius:4px;padding:20px 40px;text-align:center;min-width:180px;">
+      <div style="font-size:.72rem;color:var(--text-dim);letter-spacing:.1em;margin-bottom:8px;">微信 1</div>
+      <div style="font-size:1.2rem;font-weight:700;color:var(--gold);letter-spacing:.05em;">Lik3Real</div>
+    </div>
+    <div style="background:var(--bg-card);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:20px 40px;text-align:center;min-width:180px;">
+      <div style="font-size:.72rem;color:var(--text-dim);letter-spacing:.1em;margin-bottom:8px;">微信 2</div>
+      <div style="font-size:1.2rem;font-weight:700;color:var(--text);letter-spacing:.05em;">L1nha10</div>
+    </div>
+  </div>
+  <div class="r" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;">
+    <span class="badge">CTF 竞赛</span>
+    <span class="badge">渗透测试</span>
+    <span class="badge">AI 安全</span>
+    <span class="badge">漏洞挖掘</span>
+    <span class="badge">红蓝对抗</span>
+    <span class="badge">职业发展</span>
+  </div>
+  <div class="r" style="border-top:1px solid rgba(255,255,255,.06);padding-top:20px;width:100%;max-width:500px;">
+    <div style="font-size:.75rem;color:var(--text-dim);letter-spacing:.08em;">木鱼安全 · 枢智出品 — CyberAscent 计划</div>
+  </div>
+</div>
+</section>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const progress = document.getElementById('progress');
+const navDots = document.getElementById('navDots');
+const counter = document.getElementById('counter');
+const total = slides.length;
+
+/* ── Slide name map for tooltips ── */
+const slideNames = {
+  's1':'封面','s-toc':'目录','s-ch1':'Ch.01','s2':'痛点',
+  's3':'价值','s-ch2':'Ch.02','s4':'基石','s5':'AI安全',
+  's-ch3':'Ch.03','s6':'生态','s7':'路线','s8':'活动',
+  's-ch4':'Ch.04','s9':'讲师','s10':'荣誉',
+  's-ch5':'Ch.05','s11':'亮点','s12':'福利','s13':'定价',
+  's14':'优势','s15':'加入'
+};
+
+/* ── Build nav dots with tooltips ── */
+slides.forEach((s, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'nav-dot';
+  const name = slideNames[s.id] || `${i+1}`;
+  dot.setAttribute('aria-label', name);
+  dot.setAttribute('title', name);
+  dot.onclick = () => s.scrollIntoView({ behavior: 'smooth' });
+  navDots.appendChild(dot);
+});
+const dots = document.querySelectorAll('.nav-dot');
+
+/* ── Flash highlight effect ── */
+function flashSlide(el) {
+  const overlay = document.createElement('div');
+  Object.assign(overlay.style, {
+    position:'absolute', inset:'0', zIndex:'10',
+    background:'rgba(201,168,76,0.08)',
+    transition:'opacity .6s ease-out', opacity:'1',
+    pointerEvents:'none', borderRadius:'0'
+  });
+  el.appendChild(overlay);
+  requestAnimationFrame(() => {
+    overlay.style.opacity = '0';
+    setTimeout(() => overlay.remove(), 650);
+  });
+}
+
+/* ── TOC click handler with flash ── */
+document.querySelectorAll('.toc-item').forEach(item => {
+  item.addEventListener('click', e => {
+    e.stopPropagation();
+    const targetId = item.getAttribute('onclick')
+      ?.match(/getElementById\('([^']+)'\)/)?.[1];
+    if (!targetId) return;
+    const target = document.getElementById(targetId);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => flashSlide(target), 400);
+    }
+  });
+});
+
+/* ── Intersection Observer ── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('vis');
+      const idx = [...slides].indexOf(e.target);
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      progress.style.width = ((idx + 1) / total * 100) + '%';
+      counter.textContent = `${idx + 1}  /  ${total}`;
+    }
+  });
+}, { threshold: 0.45 });
+slides.forEach(s => observer.observe(s));
+
+/* ── Keyboard navigation ── */
+document.addEventListener('keydown', e => {
+  const idx = [...slides].findIndex(s => s.classList.contains('vis'));
+  if (['ArrowDown','ArrowRight',' '].includes(e.key) && idx < total - 1) {
+    e.preventDefault();
+    slides[idx + 1].scrollIntoView({ behavior: 'smooth' });
+  } else if (['ArrowUp','ArrowLeft'].includes(e.key) && idx > 0) {
+    e.preventDefault();
+    slides[idx - 1].scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
+/* ── Click to advance (skip interactive elements) ── */
+document.addEventListener('click', e => {
+  if (e.target.closest('.nav-dot') || e.target.closest('.toc-item')
+    || e.target.closest('.card') || e.target.closest('a') || e.target.closest('button')) return;
+  const idx = [...slides].findIndex(s => s.classList.contains('vis'));
+  if (idx < total - 1) slides[idx + 1].scrollIntoView({ behavior: 'smooth' });
+});
+</script>
+</body>
+</html>
