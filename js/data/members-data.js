@@ -9,7 +9,7 @@ const membersData = {
         {
             name: 'Erika',
             role: '2022级负责人',
-            description: '打杂项的人，心都很杂',
+            description: '知行合一，止于至善',
             avatar: 'img/team/Erika.jpg'
         },
         {
@@ -61,6 +61,12 @@ const membersData = {
             role: '2022级负责人',
             description: '',
             avatar: 'img/team/lVV1.jpg'
+        },
+        {
+            name: 'windgo',
+            role: '成员',
+            description: '且将新火试新茶，诗酒趁年华',
+            avatar: 'img/team/windgo.png'
         }
     ],
     'devops-team': [
@@ -73,12 +79,11 @@ const membersData = {
     ],
     'operations-team': [
         {
-            name: 'test',
-            role: 'test',
-            description: '111',
-            avatar: 'img/team/avatar10.jpg'
-        },
-
+            name: '微甜',
+            role: '美工宣传大神',
+            description: '生活微苦，我微甜',
+            avatar: 'img/team/weitian.jpg'
+        }
     ]
 };
 
